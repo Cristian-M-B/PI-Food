@@ -1,0 +1,18 @@
+.container {
+    background-color: lightslategray;
+}
+
+button {
+    background-color: lightslategray;
+    color: whitesmoke;
+    border: 1px solid whitesmoke;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 5px;
+}
+
+button:hover {
+    background-color: whitesmoke;
+    color: lightslategray;
+    border: 1px solid lightslategray;
+}

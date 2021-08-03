@@ -3,16 +3,27 @@ const router = express.Router()
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
-const { Recipe } = require('../db');
+const { Recipe, Type, Op } = require('../db');
 const {API_KEY} = process.env;
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
     let { name } = req.query;
     if(name){
         try {
+            let dbRecipesPromise = await Recipe.findAll({
+                where: { name: { [Op.like]: `%${name}%` } },
+                include: Type
+            });
+            let dbiRecipes = dbRecipesPromise.map(recite =>{
+                return {
+                    id: recite.id,
+                    name: recite.name,
+                    diets: recite.Types.map(diet => diet.name),
+                    dishTypes: recite.dishTypes
+                }
+            })
             let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&query=${name}`)
-            let apiRecipes = apiRecipesPromise.data.results;
-            apiRecipes = apiRecipes.map(recite => {
+            let apiRecipes = apiRecipesPromise.data.results.map(recite => {
                 return {
                     id: recite.id,
                     name: recite.title,
@@ -21,12 +32,23 @@ router.get('/', async (req, res) => {
                     dishTypes: recite.dishTypes.map(dish => dish),
                 }
             })
-            res.status(200).json(apiRecipes);
+            let allRecipes = dbiRecipes.concat(apiRecipes);
+            allRecipes.length > 0 ? res.status(200).json(allRecipes) : res.status(200).send("No hubo coincidencias");
         } catch (error) {
             res.status(400).send(error);
         }
     } else {
-        res.status(400).send("name no ingresado")
+        let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=5`)
+        let apiRecipes = apiRecipesPromise.data.results.map(recite => {
+            return {
+                id: recite.id,
+                name: recite.title,
+                image: recite.image,
+                diets: recite.diets.map(diet => diet),
+                dishTypes: recite.dishTypes.map(dish => dish),
+            }
+        })
+        res.status(200).json(apiRecipes)
     }
 })
 
@@ -35,8 +57,23 @@ router.get('/:id', async (req, res) => {
     if(id){
         try {
             if(id.length>10){
-                let dbiRecipesPromise = await Recipe.findByPk(id);
-                res.status(200).json(dbiRecipesPromise);
+                let dbiRecipesPromise = await Recipe.findOne({
+                    where: {
+                        id
+                    },
+                    include: Type
+                });
+                let dbiRecipes = {
+                        id: dbiRecipesPromise.id,
+                        name: dbiRecipesPromise.name,
+                        score: dbiRecipesPromise.score,
+                        healthScore: dbiRecipesPromise.healthScore,
+                        summary: dbiRecipesPromise.summary,
+                        diets: dbiRecipesPromise.Types.map(diet => diet.name),
+                        dishTypes: dbiRecipesPromise.dishTypes,
+                        steps: dbiRecipesPromise.steps
+                    }
+                res.status(200).json(dbiRecipes);
             } else {
                 let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?&apiKey=${API_KEY}`)
                 let apiRecipes = apiRecipesPromise.data;
@@ -59,28 +96,30 @@ router.get('/:id', async (req, res) => {
             res.status(400).send(error);
         }
     } else {
-        res.status(400).send('id no ingresado');
+        res.status(400).send('Falta enviar información');
     }
 })
 
 router.post('/', async (req, res) => {
-    let {name, score, healthScore, summary, steps} = req.body;
+    let {name, score, healthScore, summary, steps, dishTypes, diets} = req.body;
     if(name && summary){
         try {
-            const createdRecipe = await Recipe.create({
+            let createRecipe = await Recipe.create({
                 id: uuidv4(),
                 name,
-                summary,
                 score,
                 healthScore,
+                dishTypes,
+                summary,
                 steps
             })
-            res.json(createdRecipe)
+            let newRecipe = await createRecipe.addTypes(diets)
+            res.json(newRecipe)
         } catch(error) {
             console.log(error)
         }
     } else {
-        res.send("Enviar los datos obligatorios")
+        res.send("Falta enviar información")
     }
 })
 

@@ -18,11 +18,61 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
-const { conn } = require('./src/db.js');
+const { conn, Type } = require('./src/db.js');
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
   server.listen(3001, () => {
     console.log('is listening at 3001'); // eslint-disable-line no-console
+    // precargar la base de datos con los tipos
+    let vegetarianType = Type.create({
+      name: "vegetarian",
+    });
+    let pescetarianType = Type.create({
+      name: "pescetarian",
+    });
+    let veganType = Type.create({
+      name: "vegan",
+    });
+    let glutenFreeType = Type.create({
+      name: "gluten free",
+    });
+    let lactoVegetarianType = Type.create({
+      name: "lacto vegetarian",
+    });
+    let paleolithicType = Type.create({
+      name: "paleolithic",
+    });
+    let dairyFreeType = Type.create({
+      name: "dairy free",
+    });
+    let whole30Type = Type.create({
+      name: "whole30",
+    });
+    let ovoVegetarianType = Type.create({
+      name: "ovo vegetarian",
+    });
+    let primalType = Type.create({
+      name: "primal",
+    });
+    let ketogenicType = Type.create({
+      name: "ketogenic",
+    });
+    let paleoType = Type.create({
+      name: "paleo",
+    });
+    let fodmapFriendlyType = Type.create({
+      name: "fodmap friendly",
+    });
+    let lactoOvoVegetarianType = Type.create({
+      name: "lacto ovo vegetarian",
+    });
+    Promise.all([vegetarianType, pescetarianType, veganType, glutenFreeType, lactoVegetarianType,
+      paleolithicType, dairyFreeType, whole30Type, ovoVegetarianType, primalType, ketogenicType,
+      paleoType, fodmapFriendlyType, lactoOvoVegetarianType
+    ])
+      .then(res => {
+        console.log("Tipos precargados");
+      })
   });
 });
