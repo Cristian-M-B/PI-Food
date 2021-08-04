@@ -6,7 +6,7 @@ require('dotenv').config();
 const { Recipe, Type, Op } = require('../db');
 const {API_KEY} = process.env;
 
-router.get('/', async (req, res, next) => {
+router.get('/', async (req, res) => {
     let { name } = req.query;
     if(name){
         try {

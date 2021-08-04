@@ -1,8 +1,15 @@
+import { Link } from 'react-router-dom';
+import SearchBar from '../searchBar/SearchBar.js';
 import './NavBar.css'
 
-export default function NavBar(){
+export default function NavBar() {
     return <div className='container'>
-        <button>Home</button>
-        <button>Create Recipe</button>
+        <Link to='/home/recipes'>
+            <button>Home</button>
+        </Link>
+        <Link to='/home/create'>
+            <button>Create Recipe</button>
+        </Link>
+        <SearchBar />
     </div>
 }
