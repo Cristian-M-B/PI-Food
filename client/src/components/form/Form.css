@@ -1,0 +1,9 @@
+.recipeForm {
+    background-color: darkslategray;
+    display: flex;
+    justify-content: center;
+}
+
+input{
+    display:inline-block;
+}

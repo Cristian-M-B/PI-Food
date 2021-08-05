@@ -1,5 +1,17 @@
-.container {
+.divNav {
     background-color: lightslategray;
+     display: flex;
+    /* justify-content: center; */
+}
+
+.navSearchBar{
+    /* display: flex;  */
+    justify-content: flex-end; /* lo llevo a la izquierda */
+}
+
+.navHome{
+    /* display: flex;  */
+    justify-content: flex-start; /* lo llevo a la izquierda */
 }
 
 button {

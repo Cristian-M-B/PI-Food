@@ -38,7 +38,8 @@ router.get('/', async (req, res) => {
             res.status(400).send(error);
         }
     } else {
-        let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=5`)
+        let dbRecipesPromise = await Recipe.findAll();
+        let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=2`)
         let apiRecipes = apiRecipesPromise.data.results.map(recite => {
             return {
                 id: recite.id,
@@ -48,7 +49,8 @@ router.get('/', async (req, res) => {
                 dishTypes: recite.dishTypes.map(dish => dish),
             }
         })
-        res.status(200).json(apiRecipes)
+        let allRecipes = dbRecipesPromise.concat(apiRecipes)
+        res.status(200).json(allRecipes)
     }
 })
 
