@@ -1,6 +1,7 @@
 import { GET_RECIPES } from "../actions/constants";
 import { GET_DETAIL } from "../actions/constants";
 import { REMOVE_DETAIL } from "../actions/constants";
+import {GET_RECIPES_NAME} from "../actions/constants";
 
 var initialState = {
     recipes: [],
@@ -23,6 +24,11 @@ function reducer(state = initialState, action) {
             return {
             ...state,
             detail: {}
+        }
+        case GET_RECIPES_NAME:
+            return {
+            ...state,
+            recipes: action.payload
         }
         default: return state
     }

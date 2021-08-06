@@ -1,7 +1,11 @@
 /* body{
-    background-image: url("https://fondosmil.com/fondo/56609.jpg");
+    background-image: url("https://fondosmil.com/fondo/56609.jpg"); 
     background-size: contain;
     background-position: center;
-    background-repeat: no-repeat;
-    height: auto;
+    background-repeat: no-repeat;  
+} */
+
+/* .btnLanding{
+    display: flex;
+    justify-content: center;
 } */

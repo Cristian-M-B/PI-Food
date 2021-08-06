@@ -4,9 +4,7 @@ const { Type } = require('../db');
 
 router.get('/', async (req, res) => {
     try{
-        let allTypes = await Type.findAll(
-            // exclude: createdAt, updatedAt
-        );
+        let allTypes = await Type.findAll();
         res.status(200).json(allTypes);
     } catch (error){
         console.log(error);

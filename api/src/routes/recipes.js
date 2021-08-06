@@ -38,19 +38,23 @@ router.get('/', async (req, res) => {
             res.status(400).send(error);
         }
     } else {
-        let dbRecipesPromise = await Recipe.findAll();
-        let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=2`)
-        let apiRecipes = apiRecipesPromise.data.results.map(recite => {
-            return {
-                id: recite.id,
-                name: recite.title,
-                image: recite.image,
-                diets: recite.diets.map(diet => diet),
-                dishTypes: recite.dishTypes.map(dish => dish),
-            }
-        })
-        let allRecipes = dbRecipesPromise.concat(apiRecipes)
-        res.status(200).json(allRecipes)
+        try {
+            let dbRecipesPromise = await Recipe.findAll();
+            let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=1`)
+            let apiRecipes = apiRecipesPromise.data.results.map(recite => {
+                return {
+                    id: recite.id,
+                    name: recite.title,
+                    image: recite.image,
+                    diets: recite.diets.map(diet => diet),
+                    dishTypes: recite.dishTypes.map(dish => dish),
+                }
+            })
+            let allRecipes = dbRecipesPromise.concat(apiRecipes)
+            res.status(200).json(allRecipes)
+        } catch (error){
+            console.log(error);
+        }
     }
 })
 
@@ -90,7 +94,7 @@ router.get('/:id', async (req, res) => {
                         dishTypes: apiRecipes.dishTypes.map(dish => dish),
                         steps: apiRecipes.analyzedInstructions.map(instruction => {
                             return instruction.steps.map(step => step.step)
-                        })
+                        }).flat()
                     }
                 res.status(200).json(apiRecipes);
             }
