@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const axios = require('axios');
-const { v4: uuidv4 } = require('uuid');
+// const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
 const { Recipe, Type, Op } = require('../db');
 const {API_KEY} = process.env;
@@ -107,12 +107,13 @@ router.get('/:id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    let {name, score, healthScore, summary, steps, dishTypes, diets} = req.body;
+    let {name, image, score, healthScore, summary, steps, dishTypes, diets} = req.body;
     if(name && summary){
         try {
             let createRecipe = await Recipe.create({
-                id: uuidv4(),
+                // id: uuidv4(),
                 name,
+                image,
                 score,
                 healthScore,
                 dishTypes,

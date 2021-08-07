@@ -6,13 +6,13 @@ import './Recipes.css';
 
 export default function Recipes () {
     const dispatch = useDispatch();
-    const recipes = useSelector(state => state.recipes);
+    // const recipes = useSelector(state => state.recipes);
 
     useEffect(() => {
         dispatch(getRecipes())
     }, [dispatch])
 
-    // const recipes = useSelector(state => state.recipes);
+    const recipes = useSelector(state => state.recipes);
 
     return <div className="recipesCards">
         {recipes?.map(recipe => <Recipe 

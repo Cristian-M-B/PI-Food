@@ -1,4 +1,5 @@
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { getRecipes } from '../../redux/actions/index.js';
 import Recipes from '../recipes/Recipes.js';
 
 export default function Home () {
@@ -14,7 +15,18 @@ export default function Home () {
     // }
     // var types = getTypes();
     var array = ['All','Vegetarian','Vegan']
+
+    const dispatch = useDispatch();
+
+
+    function handleOnClick(e){
+        dispatch(getRecipes());
+    }
+    
     return <div>
+        <div>
+            <button onClick={handleOnClick}>Reload Recipes</button>
+        </div>
         <div>
         <select>
             <option value='asc'>Asc</option>

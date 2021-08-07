@@ -1,15 +1,18 @@
 import axios from "axios";
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import './Form.css';
 
 export default function Form () {
+
+    const history = useHistory();
     const [input, setInput] = useState({
         name: "",
         score: 0,
         healthScore: 0,
-        // image: "",
+        image: "",
         summary: "",
-        diets: []
+        // diets: []
         // dishTypes: [],
         // steps: []
     });
@@ -22,10 +25,11 @@ export default function Form () {
     }
 
     async function postRecipe(input){
-        let {name, score, healthScore, summary} = input;
+        let {name, image, score, healthScore, summary} = input;
         try {
             await axios.post(`http://localhost:3001/api/recipes/`, {
                 name,
+                image,
                 score,
                 healthScore,
                 summary
@@ -42,10 +46,12 @@ export default function Form () {
             name: "",
             score: 0,
             healthScore: 0,
-            // image: "",
-            summary: ""
+            image: "",
+            summary: "",
+            // diets: []
         })
-        // alert("Recipe Successfully Created")
+        alert("Recipe Successfully Created")
+        history.push('/home/recipes');
     }
 
     return <div className='recipeForm'>
@@ -53,7 +59,7 @@ export default function Form () {
             <input type='text' placeholder='Name' name='name' required value={input.name} onChange={handleOnChange} />
             <input type='number' placeholder='Score' name='score' value={input.socre} onChange={handleOnChange} />
             <input type='number' placeholder='HealthScore' name='healthScore' value={input.healthScore} onChange={handleOnChange} />
-            {/* <input type='url' placeholder='URL Image' name='image' value={input.image} onChange={handleOnChange} /> */}
+            <input type='url' placeholder='URL Image' name='image' value={input.image} onChange={handleOnChange} />
             <input type='text' placeholder='Summary' name='summary' required value={input.summary} onChange={handleOnChange} />
             {/* <select name='diets' multiple>
                 <opcion value="1">Vegetariano</opcion>
