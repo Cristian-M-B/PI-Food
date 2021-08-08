@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import SearchBar from '../searchBar/SearchBar.js';
-import './NavBar.css'
+import './NavBar.css';
 
 export default function NavBar() {
     return <div className='divNav'>

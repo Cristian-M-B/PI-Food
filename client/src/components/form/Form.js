@@ -57,10 +57,10 @@ export default function Form () {
     return <div className='recipeForm'>
         <form onSubmit={handleOnSubmit}>
             <input type='text' placeholder='Name' name='name' required value={input.name} onChange={handleOnChange} />
-            <input type='number' placeholder='Score' name='score' value={input.socre} onChange={handleOnChange} />
-            <input type='number' placeholder='HealthScore' name='healthScore' value={input.healthScore} onChange={handleOnChange} />
+            <input type='text' placeholder='Score' name='score' value={input.score} onChange={handleOnChange} />
+            <input type='text' placeholder='HealthScore' name='healthScore' value={input.healthScore} onChange={handleOnChange} />
             <input type='url' placeholder='URL Image' name='image' value={input.image} onChange={handleOnChange} />
-            <input type='text' placeholder='Summary' name='summary' required value={input.summary} onChange={handleOnChange} />
+            <textarea type='text' placeholder='Summary' name='summary' required  rows='10' cols='50' value={input.summary} onChange={handleOnChange} />
             {/* <select name='diets' multiple>
                 <opcion value="1">Vegetariano</opcion>
                 <opcion value="vegano" label="Vegano"></opcion>

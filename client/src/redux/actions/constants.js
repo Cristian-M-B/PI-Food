@@ -2,3 +2,6 @@ export const GET_RECIPES = 'GET_RECIPES';
 export const GET_DETAIL = 'GET_DETAIL';
 export const REMOVE_DETAIL = 'REMOVE_DETAIL';
 export const GET_RECIPES_NAME = 'GET_RECIPES_NAME';
+export const GET_TYPES = 'GET_TYPES';
+export const SORT_RECIPES_BY_NAME = 'SORT_RECIPES_BY_NAME';
+export const SORT_RECIPES_BY_SCORE = 'SORT_RECIPES_BY_SCORE';

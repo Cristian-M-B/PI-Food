@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const axios = require('axios');
-// const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
 const { Recipe, Type, Op } = require('../db');
 const {API_KEY} = process.env;
@@ -18,6 +17,8 @@ router.get('/', async (req, res) => {
                 return {
                     id: recite.id,
                     name: recite.name,
+                    image: recite.image,
+                    score: recite.score,
                     diets: recite.Types.map(diet => diet.name),
                     dishTypes: recite.dishTypes
                 }
@@ -28,6 +29,7 @@ router.get('/', async (req, res) => {
                     id: recite.id,
                     name: recite.title,
                     image: recite.image,
+                    score: recite.score,
                     diets: recite.diets.map(diet => diet),
                     dishTypes: recite.dishTypes.map(dish => dish),
                 }
@@ -46,6 +48,7 @@ router.get('/', async (req, res) => {
                     id: recite.id,
                     name: recite.title,
                     image: recite.image,
+                    score: recite.spoonacularScore,
                     diets: recite.diets.map(diet => diet),
                     dishTypes: recite.dishTypes.map(dish => dish),
                 }
@@ -111,7 +114,6 @@ router.post('/', async (req, res) => {
     if(name && summary){
         try {
             let createRecipe = await Recipe.create({
-                // id: uuidv4(),
                 name,
                 image,
                 score,

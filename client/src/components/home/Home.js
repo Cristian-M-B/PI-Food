@@ -1,47 +1,60 @@
-import { useDispatch } from 'react-redux';
-import { getRecipes } from '../../redux/actions/index.js';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getRecipes, getTypes, sortRecipesByName, sortRecipesByScore } from '../../redux/actions/index.js';
 import Recipes from '../recipes/Recipes.js';
+import Paged from '../paged/Paged.js';
 
 export default function Home () {
-
-    // async function getTypes(){
-    //     try {
-    //         let json = await axios('http://localhost:3001/api/types');
-    //         let data = json.data;
-    //         return data;
-    //     } catch (error){
-    //         console.log(error);
-    //     }
-    // }
-    // var types = getTypes();
-    var array = ['All','Vegetarian','Vegan']
-
     const dispatch = useDispatch();
+    const allRecipes = useSelector(state => state.recipes)
+    const [order, setOrder] = useState('');
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [recipesPerPage, setRecipesPerPage] = useState(5);
+    const indexLastRecipe = currentPage * recipesPerPage;
+    const indexFirstRecipe = indexLastRecipe - recipesPerPage;
+    const currentRecipes = allRecipes.slice(indexFirstRecipe, indexLastRecipe);
+
+    useEffect(() => {
+        dispatch(getRecipes())
+    }, [dispatch])
+
+    function paged (numberPage){
+        setCurrentPage(numberPage);
+    }
 
     function handleOnClick(e){
         dispatch(getRecipes());
     }
     
+    function handleSortAlphabetically(e){
+        dispatch(sortRecipesByName(e.target.value));
+        setOrder(`Order ${e.target.value}`)
+    }
+
+    function handleSortScore(e){
+        dispatch(sortRecipesByScore(e.target.value));
+        setOrder(`Order ${e.target.value}`)
+    }
+
     return <div>
         <div>
             <button onClick={handleOnClick}>Reload Recipes</button>
         </div>
         <div>
-        <select>
+        <select onChange={handleSortAlphabetically}>
             <option value='asc'>Asc</option>
             <option value='desc'>Desc</option>
         </select>
-        <select>
-            <option value='higher'>Higher Score</option>
+        <select onChange={handleSortScore}>
             <option value='lower'>Lower Score</option>
+            <option value='higher'>Higher Score</option>
         </select>
-        <select>
-            {/* <option value='higher'>{types.map(type => type)}</option> */}
-            {/* {types?.map(type => <option key={type}value={type}>{type}</option>)} */}
-            {array?.map(type => <option value={type}>{type}</option>)}
-        </select>
+        {/* <select>
+            {types?.map(type => <option value={type}>{type}</option>)}
+        </select> */}
         </div>
-        <Recipes />
+        <Paged recipesPerPage={recipesPerPage} allRecipes={allRecipes.length} paged={paged}/>
+        <Recipes currentRecipes={currentRecipes}/>
     </div>
 }
