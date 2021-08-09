@@ -7,6 +7,7 @@ import Paged from '../paged/Paged.js';
 export default function Home () {
     const dispatch = useDispatch();
     const allRecipes = useSelector(state => state.recipes)
+    const allTypes = useSelector(state => state.types)
     const [order, setOrder] = useState('');
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -17,6 +18,7 @@ export default function Home () {
 
     useEffect(() => {
         dispatch(getRecipes())
+        dispatch(getTypes())
     }, [dispatch])
 
     function paged (numberPage){
@@ -43,16 +45,19 @@ export default function Home () {
         </div>
         <div>
         <select onChange={handleSortAlphabetically}>
-            <option value='asc'>Asc</option>
-            <option value='desc'>Desc</option>
+            <option selected disabled>Sort by name</option>
+            <option value='asc'>A-Z</option>
+            <option value='desc'>Z-A</option>
         </select>
         <select onChange={handleSortScore}>
-            <option value='lower'>Lower Score</option>
-            <option value='higher'>Higher Score</option>
+            <option selected disabled>Sort by score</option>
+            <option value='lower'>Lower</option>
+            <option value='higher'>Higher</option>
         </select>
-        {/* <select>
-            {types?.map(type => <option value={type}>{type}</option>)}
-        </select> */}
+        <select>
+            <option selected disabled>Filter by type</option>
+            {/* {allTypes?.map(type => <option value={type}>{type}</option>)} */}
+        </select>
         </div>
         <Paged recipesPerPage={recipesPerPage} allRecipes={allRecipes.length} paged={paged}/>
         <Recipes currentRecipes={currentRecipes}/>
