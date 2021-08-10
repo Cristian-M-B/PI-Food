@@ -13,7 +13,7 @@ export default function Detail () {
         return () => {
             dispatch(removeDetail())
         }
-    }, [dispatch]);
+    }, [dispatch, id]);
 
     const detail = useSelector(state => state.detail);
 
@@ -21,8 +21,8 @@ export default function Detail () {
         {detail.name ?
             <div>
                 <div><h2>{detail.name}</h2></div>
-                {detail.image ? <img src={detail.image} alt="image not found" />
-                    : <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt9slf6wR4ob-ePI4hoLlwd3y4krnGhgFMBg&usqp=CAU" alt="image not found" />
+                {detail.image ? <img src={detail.image} alt="Not Found" />
+                    : <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt9slf6wR4ob-ePI4hoLlwd3y4krnGhgFMBg&usqp=CAU" alt="Not Found" />
                 }
                 <div>
                     <h4>Score</h4>
@@ -32,33 +32,31 @@ export default function Detail () {
                     <h4>HealthScore</h4>
                     <p>{detail.healthScore}</p>
                 </div>
-                {detail.diets.length ?
+                {detail.diets &&
                     <div>
                         <h4>Diets</h4>
-                        {detail.diets.map(diet => <p>{diet}</p>)}
+                        {detail.diets.map(diet => <p key={diet}>{diet}</p>)}
                     </div>
-                    : null
                 }
-                {detail.dishTypes ?
+                {detail.dishTypes &&
                     <div>
                         <h4>DishTypes</h4>
-                        {detail.dishTypes.map(dish => <p>{dish}</p>)}
+                        {detail.dishTypes.map(dish => <p key={dish}>{dish}</p>)}
                     </div>
-                    : null
                 }
                 <div>
                     <h4>Summary</h4>
-                    <p>{detail.summary}</p>
+                    <p>{detail.summary.replace(/<[^>]*>/g,'')}</p>
                 </div>
                 {detail.steps ?
                     <div>
                         <h4>Steps</h4>
-                        {detail.steps.map(step => <p>{step}</p>)}
+                        {detail.steps.map(step => <div key={step}><p>{step}</p><hr/></div>)}
                     </div>
                     : null
                 }
             </div>
-            : <h1>Cargando ...</h1>
+            : <h1>LOADING ...</h1>
         }
     </div>
 }

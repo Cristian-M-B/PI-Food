@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import { useDispatch } from 'react-redux';
 import {getRecipesName} from '../../redux/actions/index.js';
 
@@ -16,10 +16,8 @@ export default function SearchBar(){
         setInput('');
     }
 
-    return <div>
-        <form onSubmit={handleOnSubmit}>
-            <input type="text" placeholder="Search Recipe" value={input} onChange={handleOnChange} />
-            <button type='submit'>Search</button>
-        </form>
-    </div>
+    return <form onSubmit={handleOnSubmit}>
+        <input type="text" placeholder="Search Recipe" value={input} onChange={handleOnChange} />
+        <button type='submit'>Search</button>
+    </form>
 }

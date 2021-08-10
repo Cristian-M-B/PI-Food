@@ -1,4 +1,4 @@
-export default function ({recipesPerPage, allRecipes, paged}){
+export default function Paged ({recipesPerPage, allRecipes, paged}){
     const pageNumbers = [];
 
     for(let i=1;i<=Math.ceil(allRecipes/recipesPerPage);i++){

@@ -6,6 +6,7 @@ import {GET_RECIPES_NAME} from './constants.js';
 import {GET_TYPES} from './constants.js';
 import { SORT_RECIPES_BY_NAME } from './constants.js';
 import { SORT_RECIPES_BY_SCORE } from './constants.js';
+import { FILTER_RECIPES_BY_TYPE } from './constants.js';
 
 export function getRecipes() {
     return async function (dispatch) {
@@ -81,5 +82,19 @@ export function sortRecipesByScore(order){
     return{
         type: SORT_RECIPES_BY_SCORE,
         payload: order
+    }
+}
+
+export function filterRecipesByType(filter) {
+    return async function (dispatch) {
+        try {
+            let recipes = await axios.get(`http://localhost:3001/api/recipes?filter=${filter}`)
+            return dispatch({
+                type: FILTER_RECIPES_BY_TYPE,
+                payload: recipes.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
     }
 }

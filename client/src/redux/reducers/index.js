@@ -5,6 +5,7 @@ import { GET_RECIPES_NAME } from "../actions/constants";
 import { GET_TYPES } from "../actions/constants";
 import { SORT_RECIPES_BY_NAME } from "../actions/constants";
 import { SORT_RECIPES_BY_SCORE } from "../actions/constants";
+import { FILTER_RECIPES_BY_TYPE } from "../actions/constants";
 
 var initialState = {
     recipes: [],
@@ -75,6 +76,11 @@ function reducer(state = initialState, action) {
             ...state,
             recipes: sortScore
         }
+        case FILTER_RECIPES_BY_TYPE:
+            return {
+                ...state,
+                recipes: action.payload
+            }
         default: return state
     }
 }

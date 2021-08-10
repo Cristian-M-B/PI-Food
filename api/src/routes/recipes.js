@@ -6,118 +6,57 @@ const { Recipe, Type, Op } = require('../db');
 const {API_KEY} = process.env;
 
 async function getAllRecipes(){
-    try {
-        let dbRecipesPromise = await Recipe.findAll();
-        let dbRecipes = dbRecipesPromise.map(recite => {
-            return {
-                id: recite.id,
-                name: recite.name,
-                image: recite.image,
-                score: recite.score,
-                diets: recite.Types.map(diet => diet.name),
-                dishTypes: recite.dishTypes
-            }
-        })
-        let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=1`)
-        let apiRecipes = apiRecipesPromise.data.results.map(recite => {
-            return {
-                id: recite.id,
-                name: recite.title,
-                image: recite.image,
-                score: recite.score,
-                diets: recite.diets.map(diet => diet),
-                dishTypes: recite.dishTypes.map(dish => dish),
-            }
-        })
-        let allRecipes = dbRecipes.concat(apiRecipes);
-        // res.status(200).json(allRecipes);
-        console.log(allRecipes);
-        return allRecipes;
-    } catch (error) {
-        // res.status(400).send(error);
-        console.log(error);
-    }
+
 }
 
 async function getRecipesByName(name) {
-    try {
-        let dbRecipesPromise = await Recipe.findAll({
-            where: { name: { [Op.like]: `%${name}%` } },
-            include: Type
-        });
-        let dbRecipes = dbRecipesPromise.map(recite => {
-            return {
-                id: recite.id,
-                name: recite.name,
-                image: recite.image,
-                score: recite.score,
-                diets: recite.Types.map(diet => diet.name),
-                dishTypes: recite.dishTypes
-            }
-        })
-        let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&query=${name}`)
-        let apiRecipes = apiRecipesPromise.data.results.map(recite => {
-            return {
-                id: recite.id,
-                name: recite.title,
-                image: recite.image,
-                score: recite.score,
-                diets: recite.diets.map(diet => diet),
-                dishTypes: recite.dishTypes.map(dish => dish),
-            }
-        })
-        let allRecipes = dbRecipes.concat(apiRecipes);
-        // allRecipes.length ? res.status(200).json(allRecipes) : res.status(200).send("Recipe Not Found");
-        console.log(allRecipes);
-        return allRecipes;
-    } catch (error) {
-        // res.status(400).send(error);
-        console.log(error);
-    }
+
 }
 
 router.get('/', async (req, res) => {
     let { name, filter } = req.query;
-    // let allRecipes = [];
+
     if(filter){
         // allRecipes = getRecipesByName(name);
         // allRecipes.length > 0 ? res.json(allRecipes) : res.send('Recipe Not Found');
         try {
             let dbRecipesPromise = await Recipe.findAll({
-                include: Type
+            include: Type
             });
-            let dbiRecipes = [];
-            dbRecipesPromise.forEach(recite => {
-                recite.Types.forEach( r => {
-                   if(r==filter){
-                    dbiRecipes.push(recite
-                        // id: recite.id,
-                        // name: recite.name,
-                        // image: recite.image,
-                        // score: recite.score,
-                        // diets: recite.Types,
-                        // dishTypes: recite.dishTypes
-                    );
-                    console.log(recite);
-                   }
-
+            let dbRecipes=[];
+            dbRecipesPromise.forEach(recipe => {
+                recipe.Types.forEach(diet => {
+                    diet.name === filter && dbRecipes.push({
+                        id: recipe.id,
+                        name: recipe.name,
+                        image: recipe.image,
+                        score: recipe.score,
+                        diets: recipe.Types.map(diet => diet.name),
+                        dishTypes: recipe.dishTypes
+                    })
                 })
             })
-            console.log(dbiRecipes)
-            return res.json(dbiRecipes);
+
             let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=5`)
-            let apiRecipes = apiRecipesPromise.data.results.map(recite => {
-                return {
-                    id: recite.id,
-                    name: recite.title,
-                    image: recite.image,
-                    score: recite.score,
-                    diets: recite.diets.map(diet => diet),
-                    dishTypes: recite.dishTypes.map(dish => dish),
-                }
+            let apiRecipes = [];
+            apiRecipesPromise.data.results.forEach(recipe => {
+                recipe.diets.forEach(diet => {
+                    diet === filter && apiRecipes.push({
+                        id: recipe.id,
+                        name: recipe.title,
+                        image: recipe.image,
+                        score: recipe.spoonacularScore,
+                        diets: recipe.diets.map(diet => diet),
+                        dishTypes: recipe.dishTypes.map(dish => dish),
+                    })
+                })
             })
-            let allRecipes = dbiRecipes.concat(apiRecipes);
-            return allRecipes.length > 0 ? res.status(200).json(allRecipes) : res.status(200).send("Recipe Not Found");
+
+
+            let allRecipes = dbRecipes.concat(apiRecipes);
+            return allRecipes.length ? res.status(200).json(allRecipes) : res.status(200).send("Recipe Not Found");
+
+
         } catch (error) {
             return res.status(400).send(error);
         }
@@ -127,32 +66,32 @@ router.get('/', async (req, res) => {
         // allRecipes.length > 0 ? res.json(allRecipes) : res.send('Recipe Not Found');
         try {
             let dbRecipesPromise = await Recipe.findAll({
-                where: { name: { [Op.like]: `%${name}%` } },
+                where: { name: { [Op. iLike]: `%${name}%` } },
                 include: Type
             });
-            let dbiRecipes = dbRecipesPromise.map(recite =>{
+            let dbRecipes = dbRecipesPromise.map(recipe => {
                 return {
-                    id: recite.id,
-                    name: recite.name,
-                    image: recite.image,
-                    score: recite.score,
-                    diets: recite.Types.map(diet => diet.name),
-                    dishTypes: recite.dishTypes
+                    id: recipe.id,
+                    name: recipe.name,
+                    image: recipe.image,
+                    score: recipe.score,
+                    diets: recipe.Types.map(diet => diet.name),
+                    dishTypes: recipe.dishTypes
                 }
             })
             let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&query=${name}`)
-            let apiRecipes = apiRecipesPromise.data.results.map(recite => {
+            let apiRecipes = apiRecipesPromise.data.results.map(recipe => {
                 return {
-                    id: recite.id,
-                    name: recite.title,
-                    image: recite.image,
-                    score: recite.score,
-                    diets: recite.diets.map(diet => diet),
-                    dishTypes: recite.dishTypes.map(dish => dish),
+                    id: recipe.id,
+                    name: recipe.title,
+                    image: recipe.image,
+                    score: recipe.spoonacularScore,
+                    diets: recipe.diets.map(diet => diet),
+                    dishTypes: recipe.dishTypes.map(dish => dish),
                 }
             })
-            let allRecipes = dbiRecipes.concat(apiRecipes);
-            allRecipes.length > 0 ? res.status(200).json(allRecipes) : res.status(200).send("Recipe Not Found");
+            let allRecipes = dbRecipes.concat(apiRecipes);
+            allRecipes.length ? res.status(200).json(allRecipes) : res.status(200).send("Recipe Not Found");
         } catch (error) {
             res.status(400).send(error);
         }
@@ -160,19 +99,31 @@ router.get('/', async (req, res) => {
         // allRecipes = getAllRecipes();
         // res.json(allRecipes);
         try {
-            let dbRecipesPromise = await Recipe.findAll();
-            let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=1`)
-            let apiRecipes = apiRecipesPromise.data.results.map(recite => {
+            let dbRecipesPromise = await Recipe.findAll({
+                include: Type
+            });
+            let dbRecipes = dbRecipesPromise.map(recipe => {
                 return {
-                    id: recite.id,
-                    name: recite.title,
-                    image: recite.image,
-                    score: recite.spoonacularScore,
-                    diets: recite.diets.map(diet => diet),
-                    dishTypes: recite.dishTypes.map(dish => dish),
+                    id: recipe.id,
+                    name: recipe.name,
+                    image: recipe.image,
+                    score: recipe.score,
+                    diets: recipe.Types.map(diet => diet.name),
+                    dishTypes: recipe.dishTypes
                 }
             })
-            let allRecipes = dbRecipesPromise.concat(apiRecipes)
+            let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=1`)
+            let apiRecipes = apiRecipesPromise.data.results.map(recipe => {
+                return {
+                    id: recipe.id,
+                    name: recipe.title,
+                    image: recipe.image,
+                    score: recipe.spoonacularScore,
+                    diets: recipe.diets.map(diet => diet),
+                    dishTypes: recipe.dishTypes.map(dish => dish),
+                }
+            })
+            let allRecipes = dbRecipes.concat(apiRecipes)
             res.status(200).json(allRecipes)
         } catch (error){
             console.log(error);
@@ -185,23 +136,21 @@ router.get('/:id', async (req, res) => {
     if(id){
         try {
             if(id.length>10){
-                let dbiRecipesPromise = await Recipe.findOne({
-                    where: {
-                        id
-                    },
+                let dbRecipesPromise = await Recipe.findOne({
+                    where: {id},
                     include: Type
                 });
-                let dbiRecipes = {
-                        id: dbiRecipesPromise.id,
-                        name: dbiRecipesPromise.name,
-                        score: dbiRecipesPromise.score,
-                        healthScore: dbiRecipesPromise.healthScore,
-                        summary: dbiRecipesPromise.summary,
-                        diets: dbiRecipesPromise.Types.map(diet => diet.name),
-                        dishTypes: dbiRecipesPromise.dishTypes,
-                        steps: dbiRecipesPromise.steps
+                let dbRecipes = {
+                        id: dbRecipesPromise.id,
+                        name: dbRecipesPromise.name,
+                        score: dbRecipesPromise.score,
+                        healthScore: dbRecipesPromise.healthScore,
+                        summary: dbRecipesPromise.summary,
+                        diets: dbRecipesPromise.Types.map(diet => diet.name),
+                        dishTypes: dbRecipesPromise.dishTypes,
+                        steps: dbRecipesPromise.steps
                     }
-                res.status(200).json(dbiRecipes);
+                res.status(200).json(dbRecipes);
             } else {
                 let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?&apiKey=${API_KEY}`)
                 let apiRecipes = apiRecipesPromise.data;
@@ -223,14 +172,11 @@ router.get('/:id', async (req, res) => {
         } catch (error) {
             res.status(400).send(error);
         }
-    } else {
-        res.status(400).send('Falta enviar información');
     }
 })
 
 router.post('/', async (req, res) => {
     let {name, image, score, healthScore, summary, steps, dishTypes, diets} = req.body;
-    // if(name && summary){
         try {
             let createRecipe = await Recipe.create({
                 name,
@@ -246,9 +192,6 @@ router.post('/', async (req, res) => {
         } catch(error) {
             console.log(error)
         }
-    // } else {
-    //     res.send("Falta enviar información")
-    // }
 })
 
 module.exports = router

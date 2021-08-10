@@ -37,9 +37,6 @@ conn.sync({ force: true }).then(() => {
     let glutenFreeType = Type.create({
       name: "gluten free",
     });
-    let lactoVegetarianType = Type.create({
-      name: "lacto vegetarian",
-    });
     let paleolithicType = Type.create({
       name: "paleolithic",
     });
@@ -49,27 +46,16 @@ conn.sync({ force: true }).then(() => {
     let whole30Type = Type.create({
       name: "whole30",
     });
-    let ovoVegetarianType = Type.create({
-      name: "ovo vegetarian",
-    });
     let primalType = Type.create({
       name: "primal",
     });
     let ketogenicType = Type.create({
       name: "ketogenic",
     });
-    let paleoType = Type.create({
-      name: "paleo",
-    });
-    let fodmapFriendlyType = Type.create({
-      name: "fodmap friendly",
-    });
     let lactoOvoVegetarianType = Type.create({
       name: "lacto ovo vegetarian",
     });
-    Promise.all([vegetarianType, pescetarianType, veganType, glutenFreeType, lactoVegetarianType,
-      paleolithicType, dairyFreeType, whole30Type, ovoVegetarianType, primalType, ketogenicType,
-      paleoType, fodmapFriendlyType, lactoOvoVegetarianType
+    Promise.all([vegetarianType, pescetarianType, veganType, glutenFreeType, paleolithicType, dairyFreeType, whole30Type, primalType, ketogenicType, lactoOvoVegetarianType
     ])
       .then(res => {
         console.log("Tipos precargados");
