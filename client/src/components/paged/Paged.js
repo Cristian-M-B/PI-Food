@@ -6,12 +6,8 @@ export default function Paged ({recipesPerPage, allRecipes, paged}){
     }
 
     return <div>
-        <ul>
             {pageNumbers.map(number => (
-                <li key={number}>
-                    <button onClick={() => paged(number)}>{number}</button>
-                </li>
+                    <button key={number} onClick={() => paged(number)}>{number}</button>
             ))}
-        </ul>
     </div>
 }

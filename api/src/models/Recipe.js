@@ -22,12 +22,12 @@ module.exports = (sequelize) => {
     healthScore: {
       type: DataTypes.FLOAT,
     },
-    dishTypes: {
-      type: DataTypes.STRING,
-    },
     summary: {
       type: DataTypes.TEXT,
       allowNull: false,
+    },
+    dishTypes: {
+      type: DataTypes.ARRAY(DataTypes.TEXT),
     },
     steps: {
       type: DataTypes.ARRAY(DataTypes.TEXT),

@@ -6,6 +6,7 @@ import { GET_TYPES } from "../actions/constants";
 import { SORT_RECIPES_BY_NAME } from "../actions/constants";
 import { SORT_RECIPES_BY_SCORE } from "../actions/constants";
 import { FILTER_RECIPES_BY_TYPE } from "../actions/constants";
+import { POST_RECIPE } from '../actions/constants';
 
 var initialState = {
     recipes: [],
@@ -72,6 +73,24 @@ function reducer(state = initialState, action) {
                 : state.recipes.sort((a, b) => {
                     return b.score - a.score
                 })
+                // state.recipes.sort((a, b) => {
+                //     if (a.score > b.score) {
+                //         return 1
+                //     }
+                //     if (a.score < b.score) {
+                //         return -1
+                //     }
+                //     return 0
+                // })
+                // : state.recipes.sort((a, b) => {
+                //     if (a.score > b.score) {
+                //         return -1
+                //     }
+                //     if (a.score < b.score) {
+                //         return 1
+                //     }
+                //     return 0
+                // })
             return {
             ...state,
             recipes: sortScore
@@ -81,6 +100,11 @@ function reducer(state = initialState, action) {
                 ...state,
                 recipes: action.payload
             }
+        case POST_RECIPE: 
+        return{
+            ...state,
+            recipes: [...state.recipes, action.payload]
+        }
         default: return state
     }
 }

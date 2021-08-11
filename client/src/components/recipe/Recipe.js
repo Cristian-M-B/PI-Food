@@ -1,28 +1,27 @@
 import {Link} from 'react-router-dom';
 import './Recipe.css';
 
-export default function Recipe({ recipe }) {
+export default function Recipe({ id, name, image, score, diets, dishTypes }) {
     return <div className="recipeCard">
-        <Link to={`/home/detail/${recipe.id}`}>
-            <h3>{recipe.name}</h3>
+        <Link to={`/home/detail/${id}`}>
+            <h3>{name}</h3>
         </Link>
-        {recipe.image ?
-            <img src={recipe.image} alt="Not Found" height='230' width='300'/>
+        {image ?
+            <img src={image} alt="Not Found" height='230' width='300'/>
             : <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt9slf6wR4ob-ePI4hoLlwd3y4krnGhgFMBg&usqp=CAU" alt="Not Found" height='230' width='300'/>
         }
-        {/* {recipe.diets ?
+        {diets ?
             <div>
-                <h4>Diets</h4> */}
-                {recipe.diets.map(diet => <p key={diet}>{diet}</p>)}
-            {/* </div>
+                {/* <h4>Diets</h4> */}
+                {diets.map((diet, index) => <p key={index}>{diet}</p>)}
+            </div>
             :null
-        } */}
-        {recipe.dishTypes &&
+        } 
+        {dishTypes &&
             <div>
                 <h4>DishTypes</h4>
-                {recipe.dishTypes.map(dish => <p key={dish}>{dish}</p>)}
+                {dishTypes.map((dish, index)=> <p key={index}>{dish}</p>)}
             </div>
-            // : null
         }
     </div>
 }

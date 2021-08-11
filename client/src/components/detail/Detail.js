@@ -13,13 +13,14 @@ export default function Detail () {
         return () => {
             dispatch(removeDetail())
         }
-    }, [dispatch, id]);
+    }, [dispatch]);
 
     const detail = useSelector(state => state.detail);
 
     return <div className="detailCard">
         {detail.name ?
             <div>
+                {console.log(detail)}
                 <div><h2>{detail.name}</h2></div>
                 {detail.image ? <img src={detail.image} alt="Not Found" />
                     : <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt9slf6wR4ob-ePI4hoLlwd3y4krnGhgFMBg&usqp=CAU" alt="Not Found" />
@@ -48,13 +49,15 @@ export default function Detail () {
                     <h4>Summary</h4>
                     <p>{detail.summary.replace(/<[^>]*>/g,'')}</p>
                 </div>
-                {detail.steps ?
+                {/* {detail.steps && */}
                     <div>
                         <h4>Steps</h4>
-                        {detail.steps.map(step => <div key={step}><p>{step}</p><hr/></div>)}
+                        {/* {Array.isArray(detail.steps) ? 
+                        <p>{detail.steps.map(step => <div key={step}><p>{step}</p><hr/></div>)} </p> */}
+                        <p>{detail.steps}</p>
+                        {/* } */}
                     </div>
-                    : null
-                }
+                {/* } */}
             </div>
             : <h1>LOADING ...</h1>
         }

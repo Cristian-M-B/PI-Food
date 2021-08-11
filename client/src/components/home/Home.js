@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getRecipes, getTypes, sortRecipesByName, sortRecipesByScore, filterRecipesByType } from '../../redux/actions/index.js';
 import Recipes from '../recipes/Recipes.js';
+// import Recipe from '../recipe/Recipe.js';
 import Paged from '../paged/Paged.js';
 
 export default function Home () {
@@ -9,10 +10,10 @@ export default function Home () {
     const allRecipes = useSelector(state => state.recipes)
     const allTypes = useSelector(state => state.types)
 
-    const [order, setOrder] = useState('');
+    const [render, setRender] = useState('');
 
     const [currentPage, setCurrentPage] = useState(1);
-    const recipesPerPage = 5;
+    const [recipesPerPage, setRecipesPerPage] = useState(5);
     const indexLastRecipe = currentPage * recipesPerPage;
     const indexFirstRecipe = indexLastRecipe - recipesPerPage;
     const currentRecipes = allRecipes.slice(indexFirstRecipe, indexLastRecipe);
@@ -33,19 +34,19 @@ export default function Home () {
     
     function handleSortAlphabetically(e){
         dispatch(sortRecipesByName(e.target.value));
-        setOrder(`Order ${e.target.value}`);
+        setRender(`Order ${e.target.value}`);
         setCurrentPage(1);
     }
 
     function handleSortScore(e){
         dispatch(sortRecipesByScore(e.target.value));
-        setOrder(`Order ${e.target.value}`);
+        setRender(`Sort ${e.target.value}`);
         setCurrentPage(1);
     }
 
     function handleFilter(e){
         dispatch(filterRecipesByType(e.target.value))
-        setOrder(`Filter ${e.target.value}`);
+        setRender(`Filter ${e.target.value}`);
         setCurrentPage(1);
     }
 
@@ -70,7 +71,9 @@ export default function Home () {
             {allTypes?.map((type, index) => <option key={index} value={type}>{type}</option>)}
         </select>
         <Paged recipesPerPage={recipesPerPage} allRecipes={allRecipes.length} paged={paged}/>
-        </div>}
+        </div>
+        }
+        {console.log(currentRecipes)}
         <Recipes currentRecipes={currentRecipes}/>
     </div>
 }

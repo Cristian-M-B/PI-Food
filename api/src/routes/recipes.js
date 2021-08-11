@@ -5,20 +5,11 @@ require('dotenv').config();
 const { Recipe, Type, Op } = require('../db');
 const {API_KEY} = process.env;
 
-async function getAllRecipes(){
-
-}
-
-async function getRecipesByName(name) {
-
-}
 
 router.get('/', async (req, res) => {
     let { name, filter } = req.query;
 
     if(filter){
-        // allRecipes = getRecipesByName(name);
-        // allRecipes.length > 0 ? res.json(allRecipes) : res.send('Recipe Not Found');
         try {
             let dbRecipesPromise = await Recipe.findAll({
             include: Type
@@ -62,8 +53,7 @@ router.get('/', async (req, res) => {
         }
     }
     if(name){
-        // allRecipes = getRecipesByName(name);
-        // allRecipes.length > 0 ? res.json(allRecipes) : res.send('Recipe Not Found');
+
         try {
             let dbRecipesPromise = await Recipe.findAll({
                 where: { name: { [Op. iLike]: `%${name}%` } },
@@ -96,8 +86,7 @@ router.get('/', async (req, res) => {
             res.status(400).send(error);
         }
     } else {
-        // allRecipes = getAllRecipes();
-        // res.json(allRecipes);
+
         try {
             let dbRecipesPromise = await Recipe.findAll({
                 include: Type
@@ -143,12 +132,13 @@ router.get('/:id', async (req, res) => {
                 let dbRecipes = {
                         id: dbRecipesPromise.id,
                         name: dbRecipesPromise.name,
+                        image: dbRecipesPromise.image,
                         score: dbRecipesPromise.score,
                         healthScore: dbRecipesPromise.healthScore,
                         summary: dbRecipesPromise.summary,
+                        steps: dbRecipesPromise.steps,
                         diets: dbRecipesPromise.Types.map(diet => diet.name),
-                        dishTypes: dbRecipesPromise.dishTypes,
-                        steps: dbRecipesPromise.steps
+                        dishTypes: dbRecipesPromise.dishTypes
                     }
                 res.status(200).json(dbRecipes);
             } else {
