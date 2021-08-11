@@ -63,17 +63,18 @@ export default function Home () {
         </select>
         <select defaultValue='Sort by score' onChange={handleSortScore}>
             <option disabled>Sort by score</option>
-            <option value='Lower'>Lower</option>
+            <option value='lower'>Lower</option>
             <option value='higher'>Higher</option>
         </select>
         <select defaultValue='Filter by type' onChange={handleFilter}>
             <option disabled>Filter by type</option>
             {allTypes?.map((type, index) => <option key={index} value={type}>{type}</option>)}
         </select>
-        <Paged recipesPerPage={recipesPerPage} allRecipes={allRecipes.length} paged={paged}/>
         </div>
         }
-        {console.log(currentRecipes)}
         <Recipes currentRecipes={currentRecipes}/>
+        {Array.isArray(currentRecipes) && 
+        <Paged recipesPerPage={recipesPerPage} allRecipes={allRecipes.length} paged={paged}/>
+        }
     </div>
 }

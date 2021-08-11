@@ -6,6 +6,8 @@ import './Form.css';
 export default function Form () {
     const dispatch = useDispatch();
     const allTypes = useSelector(state => state.types);
+    const [errors, setErrors] = useState({});
+    const [errorsStep, setErrorsStep] = useState("");
     const [step, setStep] = useState("");
     const [input, setInput] = useState({
         name: "",
@@ -18,7 +20,67 @@ export default function Form () {
         dishTypes: []
     });
 
+    function validateInputs (input){
+        let errors = {};
+
+        if(!input.name){
+            errors.name = 'Name is required';
+        } else if(!/^[a-zA-Z ,.'-]+$/u.test(input.name)){
+            errors.name = 'Name is invalid';
+        } else if(input.name.length < 3) {
+            errors.name = 'Minimum 3 letters'
+        }
+
+        if(input.score){
+            if(!/^[0-9]+$/.test(input.score)){
+                errors.score = 'Score is invalid'
+            } else if(input.score < 0 || input.score > 100){
+                errors.score = 'Maximum up to 100'
+            }
+        }
+
+        if(input.healthScore){
+            if(!/^[0-9]+$/.test(input.healthScore)){
+                errors.healthScore = 'HealthScore is invalid'
+            } else if(input.healthScore < 0 || input.healthScore > 100){
+                errors.healthScore = 'Maximum up to 100'
+            }
+        }
+
+        if(input.image){
+            if(!/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(input.image)){
+                errors.image = 'URL is invalid'
+            }
+        }
+
+        if(!input.summary){
+            errors.summary = 'Summary is required';
+        } else if(!/^[a-zA-Z0-9 ,.;:/()'%-]+$/u.test(input.summary)){
+            errors.summary = 'Summary is invalid';
+        } else if(input.summary.length < 20){
+            errors.summary = 'Minimum 20 letters'
+        }
+
+        return errors;
+    }
+
+    function validateStep(step){
+        let error = '';
+        if(step){
+            if(!/^[a-zA-Z0-9 ,.;:/()'%-]+$/u.test(step)){
+                error = 'Step is invalid';
+            }
+        }
+        return error;
+    }
+
     function handleOnChange(e){
+        setErrors(
+            validateInputs({
+                ...input,
+                [e.target.name]: e.target.value,
+            })
+        );
         setInput({
             ...input,
             [e.target.name]: e.target.value
@@ -26,6 +88,7 @@ export default function Form () {
     }
 
     function handleStep(e){
+        setErrorsStep(validateStep(e.target.value))
         setStep(e.target.value)
     }
 
@@ -74,7 +137,7 @@ export default function Form () {
             healthScore: "",
             image: "",
             summary: "",
-            steps: "",
+            steps: [],
             diets: [],
             dishTypes: []
         })
@@ -84,31 +147,38 @@ export default function Form () {
     return <div className='recipeForm'>
         <form onSubmit={handleOnSubmit}>
             <label htmlFor='name'>*Name: </label>
-            <input type='text' id='name' name='name' required
+            <input type='text' id='name' name='name'
                 value={input.name} onChange={handleOnChange} />
+                {errors.name && <p>{errors.name}</p>}
             <hr />
             <label htmlFor='score'>Score: </label>
-            <input type='text' id='score' name='score' min='0' max='100'
+            <input type='text' id='score' name='score'
                 value={input.score} onChange={handleOnChange} />
+                {errors.score && <p>{errors.score}</p>}
             <hr />
             <label htmlFor='healthScore'>HealthScore: </label>
-            <input type='text' id='healthScore' name='healthScore' min='0' max='100'
+            <input type='text' id='healthScore' name='healthScore'
                 value={input.healthScore} onChange={handleOnChange} />
+                {errors.healthScore && <p>{errors.healthScore}</p>}
             <hr />
             <label htmlFor='image'>Image (URL): </label>
             <input type='url' id='image' name='image'
                 value={input.image} onChange={handleOnChange} />
+                {errors.image && <p>{errors.image}</p>}
             <hr />
             <label htmlFor='step'>Steps: </label>
             <input type='text' id='step' name='step'
             value={step} onChange={handleStep} />
-            <button onClick={handleAddStep}> Add Step</button>
+            <a onClick={handleAddStep}> Add Step</a>
+            {errorsStep && <p>{errorsStep}</p>}
             <hr/>
             <label htmlFor='summary'>*Summary: </label>
             <textarea type='text' id='summary' name='summary' required rows='10' cols='50'
                 value={input.summary} onChange={handleOnChange} />
+                {errors.summary && <p>{errors.summary}</p>}
             <hr />
             <div>
+                <p>DishTypes</p>
                 <input type='checkbox' id='side dish' value='side dish' onChange={handleDish} /><label htmlFor='side dish'>Side Dish</label>
                 <input type='checkbox' id='lunch' value='lunch' onChange={handleDish} /><label htmlFor='lunch'>Lunch</label>
                 <input type='checkbox' id='dinner' value='dinner' onChange={handleDish} /><label htmlFor='dinner'>Dinner</label>
@@ -119,9 +189,12 @@ export default function Form () {
             </div>
             <hr/>
             <div>
+                <p>Diets</p>
                 {allTypes?.map((type, index) => <label key={type} htmlFor={type}><input type='checkbox' id={type} value={index} onChange={handleDiets} />{type}</label>)}
             </div>
-            <button type="submit" onClick={handleAddStep}>Add Recipe</button>
+            <hr/>
+            {!errors.name && !errors.summary && input.name && input.summary && 
+            <button type="submit" onClick={handleAddStep}>Add Recipe</button>}
         </form>
     </div>
 }

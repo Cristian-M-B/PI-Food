@@ -44,19 +44,19 @@ function reducer(state = initialState, action) {
         case SORT_RECIPES_BY_NAME:
             let sortName = action.payload ==='asc'? 
                 state.recipes.sort((a, b) => {
-                    if (a.name > b.name) {
+                    if (a.name.toLowerCase() > b.name.toLowerCase()) {
                         return 1
                     }
-                    if (a.name < b.name) {
+                    if (a.name.toLowerCase() < b.name.toLowerCase()) {
                         return -1
                     }
                     return 0
                 })
                 : state.recipes.sort((a, b) => {
-                    if (a.name > b.name) {
+                    if (a.name.toLowerCase() > b.name.toLowerCase()) {
                         return -1
                     }
-                    if (a.name < b.name) {
+                    if (a.name.toLowerCase() < b.name.toLowerCase()) {
                         return 1
                     }
                     return 0
@@ -66,31 +66,13 @@ function reducer(state = initialState, action) {
             recipes: sortName
         }
         case SORT_RECIPES_BY_SCORE:
-            let sortScore = action.payload === 'lower' ?
+            let sortScore = action.payload === 'lower'?
                 state.recipes.sort((a, b) => {
                     return a.score - b.score
                 })
                 : state.recipes.sort((a, b) => {
                     return b.score - a.score
                 })
-                // state.recipes.sort((a, b) => {
-                //     if (a.score > b.score) {
-                //         return 1
-                //     }
-                //     if (a.score < b.score) {
-                //         return -1
-                //     }
-                //     return 0
-                // })
-                // : state.recipes.sort((a, b) => {
-                //     if (a.score > b.score) {
-                //         return -1
-                //     }
-                //     if (a.score < b.score) {
-                //         return 1
-                //     }
-                //     return 0
-                // })
             return {
             ...state,
             recipes: sortScore
