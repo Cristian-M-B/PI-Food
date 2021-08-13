@@ -1,30 +1,5 @@
-.divNav {
-    background-color: lightslategray;
-     display: flex;
-    /* justify-content: center; */
-}
-
-.navSearchBar{
-    /* display: flex;  */
-    justify-content: flex-end; /* lo llevo a la izquierda */
-}
-
-.navHome{
-    /* display: flex;  */
-    justify-content: flex-start; /* lo llevo a la izquierda */
-}
-
-button {
-    background-color: lightslategray;
-    color: whitesmoke;
-    border: 1px solid whitesmoke;
-    border-radius: 5px;
-    margin: 10px;
-    padding: 5px;
-}
-
-button:hover {
-    background-color: whitesmoke;
-    color: lightslategray;
-    border: 1px solid lightslategray;
+.navContainer {
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
 }

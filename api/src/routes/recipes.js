@@ -5,9 +5,8 @@ require('dotenv').config();
 const { Recipe, Type, Op } = require('../db');
 const {API_KEY} = process.env;
 
-
 router.get('/', async (req, res) => {
-    let { name, filter } = req.query;
+    let { name, filter, db } = req.query;
 
     if(filter){
         try {
@@ -28,9 +27,10 @@ router.get('/', async (req, res) => {
                 })
             })
 
-            let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=5`)
+            let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=20`)
             let apiRecipes = [];
             apiRecipesPromise.data.results.forEach(recipe => {
+                recipe.vegetarian && recipe.diets.unshift('vegetarian');
                 recipe.diets.forEach(diet => {
                     diet === filter && apiRecipes.push({
                         id: recipe.id,
@@ -43,15 +43,14 @@ router.get('/', async (req, res) => {
                 })
             })
 
-
             let allRecipes = dbRecipes.concat(apiRecipes);
             return allRecipes.length ? res.status(200).json(allRecipes) : res.status(200).send("Recipe Not Found");
-
 
         } catch (error) {
             return res.status(400).send(error);
         }
     }
+
     if(name){
 
         try {
@@ -69,9 +68,10 @@ router.get('/', async (req, res) => {
                     dishTypes: recipe.dishTypes
                 }
             })
+
             let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&query=${name}`)
             let apiRecipes = apiRecipesPromise.data.results.map(recipe => {
-                return {
+                apiRecipesName = {
                     id: recipe.id,
                     name: recipe.title,
                     image: recipe.image,
@@ -79,14 +79,19 @@ router.get('/', async (req, res) => {
                     diets: recipe.diets.map(diet => diet),
                     dishTypes: recipe.dishTypes.map(dish => dish),
                 }
+                recipe.vegetarian && apiRecipesName.diets.unshift('vegetarian');
+                return apiRecipesName;
             })
-            let allRecipes = dbRecipes.concat(apiRecipes);
-            allRecipes.length ? res.status(200).json(allRecipes) : res.status(200).send("Recipe Not Found");
-        } catch (error) {
-            res.status(400).send(error);
-        }
-    } else {
 
+            let allRecipes = dbRecipes.concat(apiRecipes);
+            return allRecipes.length ? res.status(200).json(allRecipes) : res.status(200).send("Recipe Not Found");
+
+        } catch (error) {
+            return res.status(400).send(error);
+        }
+    }
+
+    if(db){
         try {
             let dbRecipesPromise = await Recipe.findAll({
                 include: Type
@@ -101,22 +106,43 @@ router.get('/', async (req, res) => {
                     dishTypes: recipe.dishTypes
                 }
             })
-            let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=1`)
-            let apiRecipes = apiRecipesPromise.data.results.map(recipe => {
-                return {
-                    id: recipe.id,
-                    name: recipe.title,
-                    image: recipe.image,
-                    score: recipe.spoonacularScore,
-                    diets: recipe.diets.map(diet => diet),
-                    dishTypes: recipe.dishTypes.map(dish => dish),
-                }
-            })
-            let allRecipes = dbRecipes.concat(apiRecipes)
-            res.status(200).json(allRecipes)
+            return res.status(200).json(dbRecipes)
         } catch (error){
-            console.log(error);
+            return console.log(error)
         }
+    }
+
+    try {
+        let dbRecipesPromise = await Recipe.findAll({
+            include: Type
+        });
+        let dbRecipes = dbRecipesPromise.map(recipe => {
+            return {
+                id: recipe.id,
+                name: recipe.name,
+                image: recipe.image,
+                score: recipe.score,
+                diets: recipe.Types.map(diet => diet.name),
+                dishTypes: recipe.dishTypes
+            }
+        })
+        let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=20`)
+        let apiRecipes = apiRecipesPromise.data.results.map(recipe => {
+            apiRecipesAll = {
+                id: recipe.id,
+                name: recipe.title,
+                image: recipe.image,
+                score: recipe.spoonacularScore,
+                diets: recipe.diets.map(diet => diet),
+                dishTypes: recipe.dishTypes.map(dish => dish),
+            }
+            recipe.vegetarian && apiRecipesAll.diets.unshift('vegetarian');
+            return apiRecipesAll;
+        })
+        let allRecipes = dbRecipes.concat(apiRecipes)
+        return res.status(200).json(allRecipes)
+    } catch (error) {
+        return console.log(error);
     }
 })
 
@@ -144,7 +170,7 @@ router.get('/:id', async (req, res) => {
             } else {
                 let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?&apiKey=${API_KEY}`)
                 let apiRecipes = apiRecipesPromise.data;
-                apiRecipes = {
+                apiRecipeId = {
                         id: apiRecipes.id,
                         name: apiRecipes.title,
                         image: apiRecipes.image,
@@ -157,7 +183,8 @@ router.get('/:id', async (req, res) => {
                             return instruction.steps.map(step => step.step)
                         }).flat()
                     }
-                res.status(200).json(apiRecipes);
+                apiRecipes.vegetarian && apiRecipeId.diets.unshift('vegetarian');
+                res.status(200).json(apiRecipeId);
             }
         } catch (error) {
             res.status(400).send(error);

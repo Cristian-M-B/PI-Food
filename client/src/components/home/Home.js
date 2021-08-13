@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getRecipes, getTypes, sortRecipesByName, sortRecipesByScore, filterRecipesByType } from '../../redux/actions/index.js';
+import { getDbRecipes, sortRecipesByName, sortRecipesByScore, filterRecipesByType } from '../../redux/actions/index.js';
 import Recipes from '../recipes/Recipes.js';
-// import Recipe from '../recipe/Recipe.js';
 import Paged from '../paged/Paged.js';
 
 export default function Home () {
@@ -13,22 +12,21 @@ export default function Home () {
     const [render, setRender] = useState('');
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [recipesPerPage, setRecipesPerPage] = useState(5);
+    const [recipesPerPage, setRecipesPerPage] = useState(9);
     const indexLastRecipe = currentPage * recipesPerPage;
     const indexFirstRecipe = indexLastRecipe - recipesPerPage;
     const currentRecipes = allRecipes.slice(indexFirstRecipe, indexLastRecipe);
 
-    useEffect(() => {
-        dispatch(getRecipes())
-        dispatch(getTypes())
-    }, [dispatch])
+    // useEffect(() => {
+    //     dispatch(getDbRecipes())
+    // }, [dispatch])
 
     function paged (numberPage){
         setCurrentPage(numberPage);
     }
 
     function handleOnClick(e){
-        dispatch(getRecipes());
+        dispatch(getDbRecipes());
         setCurrentPage(1);
     }
     
@@ -70,6 +68,7 @@ export default function Home () {
             <option disabled>Filter by type</option>
             {allTypes?.map((type, index) => <option key={index} value={type}>{type}</option>)}
         </select>
+        <Paged recipesPerPage={recipesPerPage} allRecipes={allRecipes.length} paged={paged}/>
         </div>
         }
         <Recipes currentRecipes={currentRecipes}/>

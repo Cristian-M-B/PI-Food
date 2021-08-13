@@ -22,7 +22,7 @@ export default function Detail () {
             <div>
                 <div><h2>{detail.name}</h2></div>
                 {detail.image ? <img src={detail.image} alt="Not Found" />
-                    : <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt9slf6wR4ob-ePI4hoLlwd3y4krnGhgFMBg&usqp=CAU" alt="Not Found" />
+                    : <img src="https://international-experience.es/wp-content/uploads/2019/08/comidas-mundo.jpg" alt="Not Found" />
                 }
                 <div>
                     <h4>Score</h4>

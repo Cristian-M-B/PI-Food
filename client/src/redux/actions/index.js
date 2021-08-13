@@ -8,6 +8,7 @@ import { SORT_RECIPES_BY_NAME } from './constants.js';
 import { SORT_RECIPES_BY_SCORE } from './constants.js';
 import { FILTER_RECIPES_BY_TYPE } from './constants.js';
 import { POST_RECIPE } from './constants.js';
+import { GET_DB_RECIPES } from './constants.js';
 
 export function getRecipes() {
     return async function (dispatch) {
@@ -117,6 +118,20 @@ export function postRecipe(input) {
             return dispatch({
                 type: POST_RECIPE,
                 payload: newRecipe.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function getDbRecipes() {
+    return async function (dispatch) {
+        try {
+            let recipes = await axios.get(`http://localhost:3001/api/recipes?db=true`)
+            return dispatch({
+                type: GET_DB_RECIPES,
+                payload: recipes.data
             })
         } catch (error) {
             console.log(error);

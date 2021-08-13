@@ -4,22 +4,22 @@ import './Recipe.css';
 export default function Recipe({ id, name, image, score, diets, dishTypes }) {
     return <div className="recipeCard">
         <Link to={`/home/detail/${id}`}>
-            <h3>{name}</h3>
+            <h3 className='recipeName'>{name}</h3>
         </Link>
         {image ?
-            <img src={image} alt="Not Found" height='230' width='300'/>
-            : <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt9slf6wR4ob-ePI4hoLlwd3y4krnGhgFMBg&usqp=CAU" alt="Not Found" height='230' width='300'/>
+            <img src={image} alt="Not Found"/>
+            : <img src="https://international-experience.es/wp-content/uploads/2019/08/comidas-mundo.jpg" alt="Not Found"/>
         }
         {Array.isArray(diets) && diets[0] &&
             <div>
                 <h4>Diets</h4>
-                {diets.map((diet, index) => <p key={index}>{diet}</p>)}
+                {diets.map((diet, index) => <p key={index} className='recipeP'>{diet}</p>)}
             </div>
         } 
         {Array.isArray(dishTypes) && dishTypes[0] &&
             <div>
                 <h4>DishTypes</h4>
-                {dishTypes.map((dish, index)=> <p key={index}>{dish}</p>)}
+                {dishTypes.map((dish, index)=> <p key={index} className='recipeP'>{dish}</p>)}
             </div>
         }
     </div>

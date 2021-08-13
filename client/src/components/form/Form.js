@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { postRecipe } from "../../redux/actions";
+import { getDbRecipes, postRecipe } from "../../redux/actions";
 import './Form.css';
 
 export default function Form () {
@@ -131,6 +131,7 @@ export default function Form () {
     function handleOnSubmit(e){
         e.preventDefault();
         dispatch(postRecipe(input));
+        dispatch(getDbRecipes());
         setInput({
             name: "",
             score: "",
@@ -144,57 +145,61 @@ export default function Form () {
         alert("Recipe Successfully Created")
     }
 
-    return <div className='recipeForm'>
-        <form onSubmit={handleOnSubmit}>
-            <label htmlFor='name'>*Name: </label>
-            <input type='text' id='name' name='name'
-                value={input.name} onChange={handleOnChange} />
+    return <form onSubmit={handleOnSubmit}>
+        <div className='formContainer'>
+            <div className='formName'>
+                <label htmlFor='name'>*Name: </label>
+                <input type='text' id='name' name='name'
+                    value={input.name} onChange={handleOnChange} />
                 {errors.name && <p>{errors.name}</p>}
-            <hr />
-            <label htmlFor='score'>Score: </label>
-            <input type='text' id='score' name='score'
-                value={input.score} onChange={handleOnChange} />
-                {errors.score && <p>{errors.score}</p>}
-            <hr />
-            <label htmlFor='healthScore'>HealthScore: </label>
-            <input type='text' id='healthScore' name='healthScore'
-                value={input.healthScore} onChange={handleOnChange} />
-                {errors.healthScore && <p>{errors.healthScore}</p>}
-            <hr />
-            <label htmlFor='image'>Image (URL): </label>
-            <input type='url' id='image' name='image'
-                value={input.image} onChange={handleOnChange} />
-                {errors.image && <p>{errors.image}</p>}
-            <hr />
-            <label htmlFor='step'>Steps: </label>
-            <input type='text' id='step' name='step'
-            value={step} onChange={handleStep} />
-            <a onClick={handleAddStep}> Add Step</a>
-            {errorsStep && <p>{errorsStep}</p>}
-            <hr/>
-            <label htmlFor='summary'>*Summary: </label>
-            <textarea type='text' id='summary' name='summary' required rows='10' cols='50'
-                value={input.summary} onChange={handleOnChange} />
-                {errors.summary && <p>{errors.summary}</p>}
-            <hr />
-            <div>
-                <p>DishTypes</p>
-                <input type='checkbox' id='side dish' value='side dish' onChange={handleDish} /><label htmlFor='side dish'>Side Dish</label>
-                <input type='checkbox' id='lunch' value='lunch' onChange={handleDish} /><label htmlFor='lunch'>Lunch</label>
-                <input type='checkbox' id='dinner' value='dinner' onChange={handleDish} /><label htmlFor='dinner'>Dinner</label>
-                <input type='checkbox' id='morning meal' value='morning meal' onChange={handleDish} /><label htmlFor='morning meal'>Morning Meal</label>
-                <input type='checkbox' id='brunch' value='brunch' onChange={handleDish} /><label htmlFor='brunch'>Brunch</label>
-                <input type='checkbox' id='breakfast' value='breakfast' onChange={handleDish} /><label htmlFor='breakfast'>Breakfast</label>
-                <input type='checkbox' id='main dish' value='main dish' onChange={handleDish} /><label htmlFor='main dish'>Main Dish</label>
             </div>
-            <hr/>
-            <div>
+            <div className='formScore'>
+                <label htmlFor='score'>Score: </label>
+                <input type='text' id='score' name='score'
+                    value={input.score} onChange={handleOnChange} />
+                {errors.score && <p>{errors.score}</p>}
+            </div>
+            <div className='formHealthScore'>
+                <label htmlFor='healthScore'>HealthScore: </label>
+                <input type='text' id='healthScore' name='healthScore'
+                    value={input.healthScore} onChange={handleOnChange} />
+                {errors.healthScore && <p>{errors.healthScore}</p>}
+            </div>
+            <div className='formImage'>
+                <label htmlFor='image'>Image (URL): </label>
+                <input type='url' id='image' name='image'
+                    value={input.image} onChange={handleOnChange} />
+                {errors.image && <p>{errors.image}</p>}
+            </div>
+            <div className='formSteps'>
+                <label htmlFor='step'>Steps: </label>
+                <input type='text' id='step' name='step'
+                    value={step} onChange={handleStep} />
+                <a className ='formA' onClick={handleAddStep}> Add Step</a>
+                {errorsStep && <p>{errorsStep}</p>}
+            </div>
+            <div className='formSummary'>
+                <label htmlFor='summary'>*Summary: </label>
+                <textarea type='text' id='summary' name='summary' rows='10' cols='50'
+                    value={input.summary} onChange={handleOnChange} />
+                {errors.summary && <p>{errors.summary}</p>}
+            </div>
+            <div className='formDishTypes'>
+                <p>DishTypes</p>
+                <label htmlFor='side dish'><input type='checkbox' id='side dish' value='side dish' onChange={handleDish} />Side Dish</label>
+                <label htmlFor='lunch'><input type='checkbox' id='lunch' value='lunch' onChange={handleDish} />Lunch</label>
+                <label htmlFor='dinner'><input type='checkbox' id='dinner' value='dinner' onChange={handleDish} />Dinner</label>
+                <label htmlFor='morning meal'><input type='checkbox' id='morning meal' value='morning meal' onChange={handleDish} />Morning Meal</label>
+                <label htmlFor='brunch'><input type='checkbox' id='brunch' value='brunch' onChange={handleDish} />Brunch</label>
+                <label htmlFor='breakfast'><input type='checkbox' id='breakfast' value='breakfast' onChange={handleDish} />Breakfast</label>
+                <label htmlFor='main dish'><input type='checkbox' id='main dish' value='main dish' onChange={handleDish} />Main Dish</label>
+            </div>
+            <div className='formDiets'>
                 <p>Diets</p>
                 {allTypes?.map((type, index) => <label key={type} htmlFor={type}><input type='checkbox' id={type} value={index} onChange={handleDiets} />{type}</label>)}
             </div>
-            <hr/>
-            {!errors.name && !errors.summary && input.name && input.summary && 
-            <button type="submit" onClick={handleAddStep}>Add Recipe</button>}
-        </form>
-    </div>
+            {!errors.name && !errors.summary && input.name && input.summary &&
+                <button type="submit" onClick={handleAddStep}>Add Recipe</button>}
+        </div>
+    </form>
 }
