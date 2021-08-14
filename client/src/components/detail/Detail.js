@@ -30,18 +30,18 @@ export default function Detail () {
                     <p className='detailP'>{detail.score}</p>
                 </div>
                 <div className='detailHealthScore'>
-                    <h4 className='detailH4'>HealthScore</h4>
+                    <h4 className='detailH4'>Health Score</h4>
                     <p className='detailP'>{detail.healthScore}</p>
                 </div>
                 {Array.isArray(detail.diets) && detail.diets[0] &&
                     <div>
-                        <h4 className='detailH4'>Diets</h4>
+                        <h4 className='detailH4'>Diets Types</h4>
                         {detail.diets.map(diet => <p className='detailP' key={diet}>{diet}</p>)}
                     </div>
                 }
                 {Array.isArray(detail.dishTypes) && detail.dishTypes[0] &&
                     <div>
-                        <h4 className='detailH4'>DishTypes</h4>
+                        <h4 className='detailH4'>Dish Types</h4>
                         {detail.dishTypes.map(dish => <p className='detailP' key={dish}>{dish}</p>)}
                     </div>
                 }

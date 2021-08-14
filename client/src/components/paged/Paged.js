@@ -1,3 +1,5 @@
+import './Paged.css';
+
 export default function Paged ({recipesPerPage, allRecipes, paged}){
     const pageNumbers = [];
 
@@ -7,7 +9,7 @@ export default function Paged ({recipesPerPage, allRecipes, paged}){
 
     return <div>
             {pageNumbers.map(number => (
-                    <button key={number} onClick={() => paged(number)}>{number}</button>
+                    <button className='pagedButton' key={number} onClick={() => paged(number)}>{number}</button>
             ))}
     </div>
 }

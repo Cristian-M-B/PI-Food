@@ -1,16 +1,18 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getDbRecipes, postRecipe } from "../../redux/actions";
 import './Form.css';
 
 export default function Form () {
     const dispatch = useDispatch();
-    const history = useHistory();
+    // const history = useHistory();
     const allTypes = useSelector(state => state.types);
     const [errors, setErrors] = useState({});
     const [errorsStep, setErrorsStep] = useState("");
     const [step, setStep] = useState("");
+    const [errorsDish, setErrorsDish] = useState("");
+    const [dish, setDish] = useState("");
     const [input, setInput] = useState({
         name: "",
         score: 0,
@@ -43,7 +45,7 @@ export default function Form () {
 
         if(input.healthScore){
             if(!/^[0-9]+$/.test(input.healthScore)){
-                errors.healthScore = 'HealthScore is invalid'
+                errors.healthScore = 'Health Score is invalid'
             } else if(input.healthScore < 0 || input.healthScore > 100){
                 errors.healthScore = 'Maximum up to 100'
             }
@@ -57,10 +59,10 @@ export default function Form () {
 
         if(!input.summary){
             errors.summary = 'Summary is required';
-        } else if(!/^[a-zA-Z0-9 ,.;:/()'%-]+$/u.test(input.summary)){
+        } else if(!/^[a-zA-Z0-9 ñ,.;:/()'%-]+$/u.test(input.summary)){
             errors.summary = 'Summary is invalid';
         } else if(input.summary.length < 20){
-            errors.summary = 'Minimum 20 letters'
+            errors.summary = 'Minimum 20 letters';
         }
 
         return errors;
@@ -69,8 +71,22 @@ export default function Form () {
     function validateStep(step){
         let error = '';
         if(step){
-            if(!/^[a-zA-Z0-9 ,.;:/()'%-]+$/u.test(step)){
+            if(!/^[a-zA-Z0-9 ñ,.;:/()'%-]+$/u.test(step)){
                 error = 'Step is invalid';
+            } else if(step.length < 10){
+                error = 'Minimum 10 letters';
+            }
+        }
+        return error;
+    }
+
+    function validateDish(dish){
+        let error = '';
+        if(dish){
+            if(!/^[a-zA-Zñ]+$/u.test(dish)){
+                error = 'Dish Type is invalid';
+            } else if(dish.length < 4){
+                error = 'Minimum 4 letters';
             }
         }
         return error;
@@ -102,6 +118,19 @@ export default function Form () {
         setStep("");
     }
 
+    function handleDish(e){
+        setErrorsDish(validateDish(e.target.value))
+        setDish(e.target.value)
+    }
+
+    function handleAddDish(){
+        setInput({
+            ...input,
+            dishTypes: [...input.dishTypes, dish]
+        })
+        setDish("");
+    }
+
     function handleDiets(e){
         if(e.target.checked){
             setInput({
@@ -112,20 +141,6 @@ export default function Form () {
             setInput({
                 ...input,
                 diets: input.diets.filter( d => d!== (parseInt(e.target.value)+1))
-            })
-        }
-    }
-
-    function handleDish(e){
-        if(e.target.checked){
-            setInput({
-                ...input,
-                dishTypes:[...input.dishTypes, e.target.value]
-            })
-        } else {
-            setInput({
-                ...input,
-                dishTypes: input.dishTypes.filter( d => d!== e.target.value)
             })
         }
     }
@@ -145,62 +160,56 @@ export default function Form () {
             dishTypes: []
         })
         alert("Recipe Successfully Created")
-        history.push('/home/recipes');
+        // history.push('/home/recipes');
     }
 
     return <form onSubmit={handleOnSubmit}>
         <div className='formContainer'>
             <div className='formInputs'>
-                <label htmlFor='name'>*Name</label>
-                <input type='text' id='name' name='name'
+                <h3 className='formTitle'>Create a new Recipe</h3>
+                <label htmlFor='name'>Name</label>
+                <input className={errors.name && 'errors'} type='text' id='name' name='name'
                     value={input.name} onChange={handleOnChange} />
                 {errors.name && <p className='errors'>{errors.name}</p>}
 
                 <label htmlFor='score'>Score</label>
-                <input type='text' id='score' name='score'
+                <input className={errors.score && 'errors'} type='text' id='score' name='score'
                     value={input.score} onChange={handleOnChange} />
                 {errors.score && <p className='errors'>{errors.score}</p>}
 
-                <label htmlFor='healthScore'>HealthScore</label>
-                <input type='text' id='healthScore' name='healthScore'
+                <label htmlFor='healthScore'>Health Score</label>
+                <input className={errors.healthScore && 'errors'} type='text' id='healthScore' name='healthScore'
                     value={input.healthScore} onChange={handleOnChange} />
                 {errors.healthScore && <p className='errors'>{errors.healthScore}</p>}
 
                 <label htmlFor='image'>Image (URL)</label>
-                <input type='url' id='image' name='image'
+                <input className={errors.image && 'errors'} type='url' id='image' name='image'
                     value={input.image} onChange={handleOnChange} />
                 {errors.image && <p className='errors'>{errors.image}</p>}
 
+                <label htmlFor='dish'>Dish Types</label>
+                <input className={errorsDish && 'errors'} type='text' id='dish' name='dish'
+                    value={dish} onChange={handleDish} />
+                {dish && !errorsDish && <a className ='formA' onClick={handleAddDish}> Add dish</a>}
+                {errorsDish && <p className='errors'>{errorsDish}</p>}
+
                 <label htmlFor='step'>Steps</label>
-                <input type='text' id='step' name='step'
+                <input className={errorsStep && 'errors'} type='text' id='step' name='step'
                     value={step} onChange={handleStep} />
-                <a className ='formA' onClick={handleAddStep}> Add step</a>
+                {step && !errorsStep && <a className ='formA' onClick={handleAddStep}> Add step</a>}
                 {errorsStep && <p className='errors'>{errorsStep}</p>}
 
-                <label htmlFor='summary'>*Summary</label>
-                <textarea type='text' id='summary' name='summary' rows='10' cols='50'
+                <p className='formP'>Diets Types</p>
+                <div className='formDiets'>
+                    {allTypes?.map((type, index) => <label key={type} htmlFor={type}><input type='checkbox' id={type} value={index} onChange={handleDiets} />{type}</label>)}
+                </div>
+                <label htmlFor='summary'>Summary</label>
+                <textarea className={errors.summary && 'errors'} type='text' id='summary' name='summary' rows='10' cols='50'
                     value={input.summary} onChange={handleOnChange} />
                 {errors.summary && <p className='errors'>{errors.summary}</p>}
 
                 {!errors.name && !errors.summary && input.name && input.summary &&
-                <button type="submit" onClick={handleAddStep}>Add Recipe</button>}
-
-            </div>
-            <div className='formCheckbox'>
-                <p className='formP'>DishTypes</p>
-                <label htmlFor='side dish'><input type='checkbox' id='side dish' value='side dish' onChange={handleDish} />Side Dish</label>
-                <label htmlFor='lunch'><input type='checkbox' id='lunch' value='lunch' onChange={handleDish} />Lunch</label>
-                <label htmlFor='dinner'><input type='checkbox' id='dinner' value='dinner' onChange={handleDish} />Dinner</label>
-                <label htmlFor='morning meal'><input type='checkbox' id='morning meal' value='morning meal' onChange={handleDish} />Morning Meal</label>
-                <label htmlFor='brunch'><input type='checkbox' id='brunch' value='brunch' onChange={handleDish} />Brunch</label>
-                <label htmlFor='breakfast'><input type='checkbox' id='breakfast' value='breakfast' onChange={handleDish} />Breakfast</label>
-                <label htmlFor='main dish'><input type='checkbox' id='main dish' value='main dish' onChange={handleDish} />Main Dish</label>
-                <p className='formP'>DietsTypes</p>
-                {allTypes?.map((type, index) => <label key={type} htmlFor={type}><input type='checkbox' id={type} value={index} onChange={handleDiets} />{type}</label>)}
-            </div>
-            <div className='formButton'>
-            {/* {!errors.name && !errors.summary && input.name && input.summary &&
-                <button type="submit" onClick={handleAddStep}>Add Recipe</button>} */}
+                <button type="submit">Add Recipe</button>}
             </div>
         </div>
     </form>

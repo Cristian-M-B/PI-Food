@@ -1,7 +1,13 @@
+.detailContainer{
+    position: relative;
+}
+
 .detailImage{
     position: absolute;
     background-color: black;
-    left: 34.5%;
+    left: 33%;
+    width: 400px;
+    height: auto;
 }
 
 .detailImage img{
