@@ -6,7 +6,7 @@ import NavBar from './components/navBar/NavBar.js';
 import Home from './components/home/Home.js';
 import Detail from './components/detail/Detail.js';
 import Form from './components/form/Form.js';
-import { getRecipes, getTypes } from './redux/actions/index.js';
+import { getDbRecipes, getRecipes, getTypes } from './redux/actions/index.js';
 import './App.css';
 
 function App() {
@@ -15,6 +15,7 @@ function App() {
   useEffect(() => {
     dispatch(getRecipes())
     dispatch(getTypes())
+    dispatch(getDbRecipes())
 }, [dispatch])
 
   return (

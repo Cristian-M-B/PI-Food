@@ -37,6 +37,10 @@
   }
 }
 
+body{
+  background-image: url("https://st3.depositphotos.com/13287578/15773/v/600/depositphotos_157733116-stock-illustration-tiled-seamless-background-fast-food.jpg");
+}
+
 button {
   background-color: black;
   color: white;

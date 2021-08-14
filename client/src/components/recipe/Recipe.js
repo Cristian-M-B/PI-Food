@@ -3,8 +3,8 @@ import './Recipe.css';
 
 export default function Recipe({ id, name, image, score, diets, dishTypes }) {
     return <div className="recipeCard">
-        <Link to={`/home/detail/${id}`}>
-            <h3 className='recipeName'>{name}</h3>
+        <Link className='recipeA' to={`/home/detail/${id}`}>
+            <h3 className='recipeH3'>{name}</h3>
         </Link>
         {image ?
             <img src={image} alt="Not Found"/>
@@ -12,13 +12,13 @@ export default function Recipe({ id, name, image, score, diets, dishTypes }) {
         }
         {Array.isArray(diets) && diets[0] &&
             <div>
-                <h4>Diets</h4>
+                <h4 className='recipeH4'>Diets</h4>
                 {diets.map((diet, index) => <p key={index} className='recipeP'>{diet}</p>)}
             </div>
         } 
         {Array.isArray(dishTypes) && dishTypes[0] &&
             <div>
-                <h4>DishTypes</h4>
+                <h4 className='recipeH4'>DishTypes</h4>
                 {dishTypes.map((dish, index)=> <p key={index} className='recipeP'>{dish}</p>)}
             </div>
         }

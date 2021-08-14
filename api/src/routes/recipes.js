@@ -6,7 +6,7 @@ const { Recipe, Type, Op } = require('../db');
 const {API_KEY} = process.env;
 
 router.get('/', async (req, res) => {
-    let { name, filter, db } = req.query;
+    let { name, filter, api, db } = req.query;
 
     if(filter){
         try {
@@ -90,6 +90,28 @@ router.get('/', async (req, res) => {
             return res.status(400).send(error);
         }
     }
+
+    if (api) {
+        try {
+            let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=20`)
+            let apiRecipes = apiRecipesPromise.data.results.map(recipe => {
+                apiRecipesAll = {
+                    id: recipe.id,
+                    name: recipe.title,
+                    image: recipe.image,
+                    score: recipe.spoonacularScore,
+                    diets: recipe.diets.map(diet => diet),
+                    dishTypes: recipe.dishTypes.map(dish => dish),
+                }
+                recipe.vegetarian && apiRecipesAll.diets.unshift('vegetarian');
+                return apiRecipesAll;
+            })
+            return res.status(200).json(apiRecipes)
+        } catch (error) {
+            return console.log(error);
+        }
+    }
+
 
     if(db){
         try {

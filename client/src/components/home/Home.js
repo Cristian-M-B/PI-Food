@@ -17,9 +17,9 @@ export default function Home () {
     const indexFirstRecipe = indexLastRecipe - recipesPerPage;
     const currentRecipes = allRecipes.slice(indexFirstRecipe, indexLastRecipe);
 
-    // useEffect(() => {
-    //     dispatch(getDbRecipes())
-    // }, [dispatch])
+    useEffect(() => {
+        dispatch(getDbRecipes())
+    }, [dispatch])
 
     function paged (numberPage){
         setCurrentPage(numberPage);

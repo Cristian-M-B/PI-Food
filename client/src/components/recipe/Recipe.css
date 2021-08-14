@@ -17,21 +17,21 @@
     color: white;
 }
 
-h3 {
+.recipeH3, .recipeH4 {
     margin: 10px;
     color: white
 }
 
-h4 {
+/* .recipeH4 {
     margin: 10px;
     color: white;
-}
+} */
 
-a {
+.recipeA {
     text-decoration: none;
     color: white;
 }
 
-a:hover{
+.recipeA :hover{
     font-size: 20px;
 }

@@ -13,7 +13,7 @@ import { GET_DB_RECIPES } from './constants.js';
 export function getRecipes() {
     return async function (dispatch) {
         try {
-            let recipes = await axios.get(`http://localhost:3001/api/recipes/`)
+            let recipes = await axios.get(`http://localhost:3001/api/recipes?api=true`)
             return dispatch({
                 type: GET_RECIPES,
                 payload: recipes.data
