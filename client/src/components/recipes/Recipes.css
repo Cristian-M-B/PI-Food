@@ -3,3 +3,13 @@
     flex-wrap: wrap;
     justify-content: center;
 }
+
+.recipesLoading, .recipesNoMatches{
+    background-color: black;
+    color: white;
+    text-align: center;
+    align-items: baseline;
+    display: inline-block;
+    padding: 15px;
+    margin-top: 175px;
+}

@@ -1,12 +1,10 @@
 import { useState } from "react";
-// import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getDbRecipes, postRecipe } from "../../redux/actions";
 import './Form.css';
 
 export default function Form () {
     const dispatch = useDispatch();
-    // const history = useHistory();
     const allTypes = useSelector(state => state.types);
     const [errors, setErrors] = useState({});
     const [errorsStep, setErrorsStep] = useState("");
@@ -160,7 +158,6 @@ export default function Form () {
             dishTypes: []
         })
         alert("Recipe Successfully Created")
-        // history.push('/home/recipes');
     }
 
     return <form onSubmit={handleOnSubmit}>
