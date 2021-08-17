@@ -56,7 +56,7 @@ export default function Detail () {
                     </div>
                 }
             </div>
-            : <h1 className='detailLoading'>LOADING ...</h1>
+            : <span className='spinner'></span>
         }   
     </div>
 }

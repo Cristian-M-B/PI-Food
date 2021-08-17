@@ -4,7 +4,7 @@
     justify-content: center;
 }
 
-.recipesLoading, .recipesNoMatches{
+.recipesNoMatches{
     background-color: black;
     color: white;
     text-align: center;
@@ -12,4 +12,37 @@
     display: inline-block;
     padding: 15px;
     margin-top: 175px;
+}
+
+.spinner, .spinner:after{
+    width: 64px;
+    height: 64px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -32px;
+    margin-left: -32px;
+    border-radius: 50px;
+    z-index: 2;
+}
+
+.spinner{
+    background-color: transparent;
+    border-top: 10px solid rgb(0,0,0);
+    border-right: 10px solid rgb(0,0,0);
+    border-bottom: 10px solid rgb(0,0,0);
+    border-left: 10px solid rgb(0,0,0,.2);
+    transform: translateZ(0);
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-duration: .8s;
+    animation-name: spinner-loading;
+}
+
+@keyframes spinner-loading{
+    0% {
+        transform: rotate(0deg)
+    } to {
+        transform: rotate(1turn);
+    }
 }

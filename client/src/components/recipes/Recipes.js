@@ -14,7 +14,7 @@ export default function Recipes ({currentRecipes}) {
         score={recipe.score}
         diets={recipe.diets}
         dishTypes={recipe.dishTypes} />)
-        : <h1 className='recipesLoading'>{'LOADING ...'}</h1>
+        : <span className='spinner'></span>
         }
     </div>
     : <h1 className='recipesNoMatches'>{'NO MATCHES'}</h1>
