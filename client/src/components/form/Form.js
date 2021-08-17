@@ -18,8 +18,8 @@ export default function Form () {
         image: "",
         summary: "",
         steps: [],
-        diets: [],
-        dishTypes: []
+        dishTypes: [],
+        diets: []
     });
 
     function validateInputs (input){
@@ -154,8 +154,8 @@ export default function Form () {
             image: "",
             summary: "",
             steps: [],
-            diets: [],
-            dishTypes: []
+            dishTypes: [],
+            diets: []
         })
         alert("Recipe Successfully Created")
     }

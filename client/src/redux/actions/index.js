@@ -105,7 +105,7 @@ export function postRecipe(input) {
     return async function (dispatch) {
         let { name, image, score, healthScore, summary, steps, dishTypes, diets } = input;
         try {
-            let newRecipe = await axios.post(`http://localhost:3001/api/recipes/`, {
+            let newRecipe = await axios.post(`http://localhost:3001/api/recipe/`, {
                 name,
                 image,
                 score,

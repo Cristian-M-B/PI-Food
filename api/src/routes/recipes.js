@@ -52,7 +52,6 @@ router.get('/', async (req, res) => {
     }
 
     if(name){
-
         try {
             let dbRecipesPromise = await Recipe.findAll({
                 where: { name: { [Op. iLike]: `%${name}%` } },
@@ -112,7 +111,6 @@ router.get('/', async (req, res) => {
         }
     }
 
-
     if(db){
         try {
             let dbRecipesPromise = await Recipe.findAll({
@@ -134,38 +132,38 @@ router.get('/', async (req, res) => {
         }
     }
 
-    try {
-        let dbRecipesPromise = await Recipe.findAll({
-            include: Type
-        });
-        let dbRecipes = dbRecipesPromise.map(recipe => {
-            return {
-                id: recipe.id,
-                name: recipe.name,
-                image: recipe.image,
-                score: recipe.score,
-                diets: recipe.Types.map(diet => diet.name),
-                dishTypes: recipe.dishTypes
-            }
-        })
-        let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=20`)
-        let apiRecipes = apiRecipesPromise.data.results.map(recipe => {
-            apiRecipesAll = {
-                id: recipe.id,
-                name: recipe.title,
-                image: recipe.image,
-                score: recipe.spoonacularScore,
-                diets: recipe.diets.map(diet => diet),
-                dishTypes: recipe.dishTypes.map(dish => dish),
-            }
-            recipe.vegetarian && apiRecipesAll.diets.unshift('vegetarian');
-            return apiRecipesAll;
-        })
-        let allRecipes = dbRecipes.concat(apiRecipes)
-        return res.status(200).json(allRecipes)
-    } catch (error) {
-        return console.log(error);
-    }
+    // try {
+    //     let dbRecipesPromise = await Recipe.findAll({
+    //         include: Type
+    //     });
+    //     let dbRecipes = dbRecipesPromise.map(recipe => {
+    //         return {
+    //             id: recipe.id,
+    //             name: recipe.name,
+    //             image: recipe.image,
+    //             score: recipe.score,
+    //             diets: recipe.Types.map(diet => diet.name),
+    //             dishTypes: recipe.dishTypes
+    //         }
+    //     })
+    //     let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=20`)
+    //     let apiRecipes = apiRecipesPromise.data.results.map(recipe => {
+    //         apiRecipesAll = {
+    //             id: recipe.id,
+    //             name: recipe.title,
+    //             image: recipe.image,
+    //             score: recipe.spoonacularScore,
+    //             diets: recipe.diets.map(diet => diet),
+    //             dishTypes: recipe.dishTypes.map(dish => dish),
+    //         }
+    //         recipe.vegetarian && apiRecipesAll.diets.unshift('vegetarian');
+    //         return apiRecipesAll;
+    //     })
+    //     let allRecipes = dbRecipes.concat(apiRecipes)
+    //     return res.status(200).json(allRecipes)
+    // } catch (error) {
+    //     return console.log(error);
+    // }
 })
 
 router.get('/:id', async (req, res) => {
