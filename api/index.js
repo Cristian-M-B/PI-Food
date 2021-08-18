@@ -59,7 +59,7 @@ conn.sync({ force: true }).then(() => {
     lactoOvoVegetarianType, whole30Type, primalType, pescetarianType, ketogenicType, paleolithicType
     ])
       .then(res => {
-        console.log("Tipos precargados");
+        console.log("Preloaded types");
       })
   });
 });
