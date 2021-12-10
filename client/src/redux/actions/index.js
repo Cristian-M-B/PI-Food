@@ -13,7 +13,7 @@ import { GET_DB_RECIPES } from './constants.js';
 export function getRecipes() {
     return async function (dispatch) {
         try {
-            let recipes = await axios.get(`http://localhost:3001/api/recipes?api=true`)
+            let recipes = await axios.get(`/api/recipes?api=true`)
             return dispatch({
                 type: GET_RECIPES,
                 payload: recipes.data
@@ -27,7 +27,7 @@ export function getRecipes() {
 export function getDetail(id) {
     return async function (dispatch) {
         try {
-            let detail = await axios.get(`http://localhost:3001/api/recipes/${id}`)
+            let detail = await axios.get(`/api/recipes/${id}`)
             return dispatch({
                 type: GET_DETAIL,
                 payload: detail.data
@@ -48,7 +48,7 @@ export function removeDetail() {
 export function getRecipesName(name) {
     return async function (dispatch) {
         try {
-            let recipes = await axios.get(`http://localhost:3001/api/recipes?name=${name}`)
+            let recipes = await axios.get(`/api/recipes?name=${name}`)
             return dispatch({
                 type: GET_RECIPES_NAME,
                 payload: recipes.data
@@ -62,7 +62,7 @@ export function getRecipesName(name) {
 export function getTypes() {
     return async function (dispatch) {
         try {
-            let types = await axios.get(`http://localhost:3001/api/types/`)
+            let types = await axios.get(`/api/types`)
             return dispatch({
                 type: GET_TYPES,
                 payload: types.data
@@ -90,7 +90,7 @@ export function sortRecipesByScore(order){
 export function filterRecipesByType(filter) {
     return async function (dispatch) {
         try {
-            let recipes = await axios.get(`http://localhost:3001/api/recipes?filter=${filter}`)
+            let recipes = await axios.get(`/api/recipes?filter=${filter}`)
             return dispatch({
                 type: FILTER_RECIPES_BY_TYPE,
                 payload: recipes.data
@@ -105,7 +105,7 @@ export function postRecipe(input) {
     return async function (dispatch) {
         let { name, image, score, healthScore, summary, steps, dishTypes, diets } = input;
         try {
-            let newRecipe = await axios.post(`http://localhost:3001/api/recipe/`, {
+            let newRecipe = await axios.post(`/api/recipe`, {
                 name,
                 image,
                 score,
@@ -128,7 +128,7 @@ export function postRecipe(input) {
 export function getDbRecipes() {
     return async function (dispatch) {
         try {
-            let recipes = await axios.get(`http://localhost:3001/api/recipes?db=true`)
+            let recipes = await axios.get(`/api/recipes?db=true`)
             return dispatch({
                 type: GET_DB_RECIPES,
                 payload: recipes.data

@@ -8,6 +8,11 @@ import Detail from './components/detail/Detail.js';
 import Form from './components/form/Form.js';
 import { getDbRecipes, getRecipes, getTypes } from './redux/actions/index.js';
 import './App.css';
+import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
+
+axios.defaults.baseURL =  process.env.REACT_APP_API || 'http://localhost:3001';
 
 function App() {
 
