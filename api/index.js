@@ -21,9 +21,11 @@ const server = require('./src/app.js');
 const { conn, Type } = require('./src/db.js');
 
 // Syncing all the models at once.
+const PORT = process.env.PORT || 3001
+
 conn.sync({ force: false }).then(() => {
-  server.listen(process.env.PORT, () => {
-    console.log(`is listening at ${process.env.PORT}`); // eslint-disable-line no-console
+  server.listen(PORT, () => {
+    console.log(`is listening at ${PORT}`); // eslint-disable-line no-console
     // precargar la base de datos con los tipos
     let vegetarianType = Type.create({
       name: "vegetarian",
