@@ -27,7 +27,7 @@ router.get('/', async (req, res) => {
                 })
             })
 
-            let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=100`)
+            let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=90`)
             let apiRecipes = [];
             apiRecipesPromise.data.results.forEach(recipe => {
                 recipe.vegetarian && recipe.diets.unshift('vegetarian');
@@ -92,7 +92,7 @@ router.get('/', async (req, res) => {
 
     if (api) {
         try {
-            let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=100`)
+            let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=90`)
             let apiRecipes = apiRecipesPromise.data.results.map(recipe => {
                 apiRecipesAll = {
                     id: recipe.id,
@@ -146,7 +146,7 @@ router.get('/', async (req, res) => {
     //             dishTypes: recipe.dishTypes
     //         }
     //     })
-    //     let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=20`)
+    //     let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=90`)
     //     let apiRecipes = apiRecipesPromise.data.results.map(recipe => {
     //         apiRecipesAll = {
     //             id: recipe.id,

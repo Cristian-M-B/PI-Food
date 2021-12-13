@@ -23,7 +23,7 @@ const { conn, Type } = require('./src/db.js');
 // Syncing all the models at once.
 const PORT = process.env.PORT || 3001
 
-conn.sync({ force: false }).then(() => {
+conn.sync({ force: true }).then(() => {
   server.listen(PORT, () => {
     console.log(`is listening at ${PORT}`); // eslint-disable-line no-console
     // precargar la base de datos con los tipos
@@ -36,29 +36,29 @@ conn.sync({ force: false }).then(() => {
     let dairyFreeType = Type.create({
       name: "dairy free",
     });
-    let veganType = Type.create({
-      name: "vegan",
-    });
     let lactoOvoVegetarianType = Type.create({
       name: "lacto ovo vegetarian",
     });
+    let veganType = Type.create({
+      name: "vegan",
+    });
     let whole30Type = Type.create({
-      name: "whole30",
+      name: "whole 30",
     });
     let primalType = Type.create({
       name: "primal",
     });
-    let pescetarianType = Type.create({
-      name: "pescetarian",
+    let pescatarianType = Type.create({
+      name: "pescatarian",
     });
-    let ketogenicType = Type.create({
-      name: "ketogenic",
+    let fodmapFriendlyType = Type.create({
+      name: "fodmap friendly",
     });
     let paleolithicType = Type.create({
       name: "paleolithic",
     });
-    Promise.all([vegetarianType, glutenFreeType, dairyFreeType, veganType,
-    lactoOvoVegetarianType, whole30Type, primalType, pescetarianType, ketogenicType, paleolithicType
+    Promise.all([vegetarianType, glutenFreeType, dairyFreeType, lactoOvoVegetarianType, 
+      veganType, whole30Type, primalType, pescatarianType, fodmapFriendlyType, paleolithicType
     ])
       .then(res => {
         console.log("Preloaded types");
