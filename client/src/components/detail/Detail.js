@@ -14,7 +14,7 @@ export default function Detail () {
         return () => {
             dispatch(removeDetail())
         }
-    }, [dispatch]);
+    }, [dispatch, id]);
 
     const detail = useSelector(state => state.detail);
 

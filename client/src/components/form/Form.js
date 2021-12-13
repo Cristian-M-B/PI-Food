@@ -50,7 +50,7 @@ export default function Form () {
         }
 
         if(input.image){
-            if(!/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(input.image)){
+            if(!/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\w .-]*)*\/?$/.test(input.image)){
                 errors.image = 'URL is invalid'
             }
         }
