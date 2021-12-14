@@ -1,5 +1,5 @@
 .recipeCard{
-    background-color: black;
+    background-color: var(--primary-color);
     border: transparent;
     border-radius: 5px;
     width: 350px;
@@ -14,12 +14,19 @@
 .recipeP {
     display: inline-block;
     margin: 10px;
-    color: white;
+    color: var(--light-color);
 }
 
 .recipeH3, .recipeH4 {
     margin: 10px;
-    color: white
+}
+
+.recipeH3{
+    color: var(--secondary-color);
+}
+
+.recipeH4{
+    color: var(--light-color);
 }
 
 /* .recipeH4 {
@@ -29,7 +36,7 @@
 
 .recipeA {
     text-decoration: none;
-    color: white;
+    color: var(--light-color);
 }
 
 .recipeA :hover{
