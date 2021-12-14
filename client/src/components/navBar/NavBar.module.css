@@ -1,0 +1,27 @@
+.container {
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.btn {
+    font-size: 1em;
+    color: var(--secondary-color);
+    border: none;
+    height: 35px;
+    background: none;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.btn:hover {
+    text-shadow: 0 0 10px var(--secondary-color);
+}
+
+@media (max-width: 600px){
+    .container{
+        justify-content: space-between;
+    }
+}
