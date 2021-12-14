@@ -5,8 +5,8 @@
 }
 
 .recipesNoMatches{
-    background-color: black;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--light-color);
     text-align: center;
     align-items: baseline;
     display: inline-block;
