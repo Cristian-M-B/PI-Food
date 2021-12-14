@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getDbRecipes, postRecipe } from "../../redux/actions";
-import './Form.css';
+import styled from './Form.module.css';
 
 export default function Form () {
     const dispatch = useDispatch();
@@ -161,52 +161,52 @@ export default function Form () {
     }
 
     return <form onSubmit={handleOnSubmit}>
-        <div className='formContainer'>
-            <div className='formInputs'>
-                <h3 className='formTitle'>Create a new Recipe</h3>
+        <div className={styled.formContainer}>
+            <div className={styled.formInputs}>
+                <h3 className={styled.formTitle}>Write your recipe</h3>
                 <label htmlFor='name'>Name</label>
-                <input className={errors.name && 'errors'} type='text' id='name' name='name'
+                <input className={errors.name && styled.errors} type='text' id='name' name='name'
                     value={input.name} onChange={handleOnChange} />
-                {errors.name && <p className='errors'>{errors.name}</p>}
+                {errors.name && <p className={styled.errors}>{errors.name}</p>}
 
                 <label htmlFor='score'>Score</label>
-                <input className={errors.score && 'errors'} type='text' id='score' name='score'
+                <input className={errors.score && styled.errors} type='text' id='score' name='score'
                     value={input.score} onChange={handleOnChange} />
-                {errors.score && <p className='errors'>{errors.score}</p>}
+                {errors.score && <p className={styled.errors}>{errors.score}</p>}
 
                 <label htmlFor='healthScore'>Health Score</label>
-                <input className={errors.healthScore && 'errors'} type='text' id='healthScore' name='healthScore'
+                <input className={errors.healthScore && styled.errors} type='text' id='healthScore' name='healthScore'
                     value={input.healthScore} onChange={handleOnChange} />
-                {errors.healthScore && <p className='errors'>{errors.healthScore}</p>}
+                {errors.healthScore && <p className={styled.errors}>{errors.healthScore}</p>}
 
                 <label htmlFor='image'>Image (URL)</label>
-                <input className={errors.image && 'errors'} type='url' id='image' name='image'
+                <input className={errors.image && styled.errors} type='url' id='image' name='image'
                     value={input.image} onChange={handleOnChange} />
-                {errors.image && <p className='errors'>{errors.image}</p>}
+                {errors.image && <p className={styled.errors}>{errors.image}</p>}
 
                 <label htmlFor='dish'>Dish Types</label>
-                <input className={errorsDish && 'errors'} type='text' id='dish' name='dish'
+                <input className={errorsDish && styled.errors} type='text' id='dish' name='dish'
                     value={dish} onChange={handleDish} />
-                {dish && !errorsDish && <a className ='formA' onClick={handleAddDish}> Add dish</a>}
-                {errorsDish && <p className='errors'>{errorsDish}</p>}
+                {dish && !errorsDish && <a className ={styled.formA} onClick={handleAddDish}> Add dish</a>}
+                {errorsDish && <p className={styled.errors}>{errorsDish}</p>}
 
                 <label htmlFor='step'>Steps</label>
-                <input className={errorsStep && 'errors'} type='text' id='step' name='step'
+                <input className={errorsStep && styled.errors} type='text' id='step' name='step'
                     value={step} onChange={handleStep} />
-                {step && !errorsStep && <a className ='formA' onClick={handleAddStep}> Add step</a>}
-                {errorsStep && <p className='errors'>{errorsStep}</p>}
+                {step && !errorsStep && <a className ={styled.formA} onClick={handleAddStep}> Add step</a>}
+                {errorsStep && <p className={styled.errors}>{errorsStep}</p>}
 
-                <p className='formP'>Diets Types</p>
-                <div className='formDiets'>
+                <p className={styled.formP}>Diets Types</p>
+                <div className={styled.formDiets}>
                     {allTypes?.map((type, index) => <label key={type} htmlFor={type}><input type='checkbox' id={type} value={index} onChange={handleDiets} />{type}</label>)}
                 </div>
                 <label htmlFor='summary'>Summary</label>
-                <textarea className={errors.summary && 'errors'} type='text' id='summary' name='summary' rows='10' cols='50'
+                <textarea className={errors.summary && styled.errors} type='text' id='summary' name='summary' rows='10' cols='50'
                     value={input.summary} onChange={handleOnChange} />
-                {errors.summary && <p className='errors'>{errors.summary}</p>}
+                {errors.summary && <p className={styled.errors}>{errors.summary}</p>}
 
                 {!errors.name && !errors.summary && input.name && input.summary &&
-                <button type="submit">Add Recipe</button>}
+                <button className={styled.btn} type="submit">Save</button>}
             </div>
         </div>
     </form>
