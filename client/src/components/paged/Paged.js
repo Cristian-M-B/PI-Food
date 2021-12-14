@@ -1,6 +1,6 @@
-import './Paged.css';
+import styled from './Paged.module.css';
 
-export default function Paged ({recipesPerPage, allRecipes, paged}){
+export default function Paged ({recipesPerPage, allRecipes, paged, currentPage}){
     const pageNumbers = [];
 
     for(let i=1;i<=Math.ceil(allRecipes/recipesPerPage);i++){
@@ -9,7 +9,7 @@ export default function Paged ({recipesPerPage, allRecipes, paged}){
 
     return <div>
             {pageNumbers.map(number => (
-                    <button className='pagedButton' key={number} onClick={() => paged(number)}>{number}</button>
+                    <button className={number === currentPage? styled.currentPaged : styled.btn} key={number} onClick={() => paged(number)}>{number}</button>
             ))}
     </div>
 }
