@@ -1,0 +1,27 @@
+.btn {
+    background-color: var(--primary-color);
+    color: var(--light-color);
+    border: 1px solid var(--light-color);
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+} 
+
+.btn:hover {
+    background-color: var(--light-color);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+} 
+
+.btn:active{
+    font-size: 20px;
+}
+
+.currentPaged {
+    background-color: var(--secondary-color);
+    color: var(--light-color);
+    border: 1px solid var(--light-color);
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+}
