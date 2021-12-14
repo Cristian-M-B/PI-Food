@@ -1,0 +1,30 @@
+.landingContainer{
+    /* position: relative; */
+    background-color: rgb(31, 29, 29);
+    background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFzua7VtnW-B8cP1ZLp8ELCpTvRRYe1c4JBQ&usqp=CAU);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% bottom;
+    height: 100vh; 
+    width: 100vw; 
+}  
+
+.landingContainer img{
+    width: 100%;
+    height: 650px;
+}
+
+.landingH3{
+    position: absolute;
+    top: 35%;
+    left: 41%;
+    background-color: var(--primary-color);
+    color: var(--light-color);
+}
+
+.landingButton{
+    position: absolute;
+    top: 39%;
+    left: 41%;
+    font-size: 16px;
+} 
