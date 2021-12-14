@@ -1,6 +1,8 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {getRecipesName} from '../../redux/actions/index.js';
+import { getRecipesName } from '../../redux/actions/index.js';
+import { HiSearch } from 'react-icons/hi';
+import styled from './SearchBar.module.css';
 
 export default function SearchBar(){
     const [input, setInput] = useState('');
@@ -16,8 +18,10 @@ export default function SearchBar(){
         setInput('');
     }
 
-    return <form onSubmit={handleOnSubmit}>
-        <input type="text" placeholder="Search Recipe" value={input} onChange={handleOnChange} />
-        <button type='submit'>Search</button>
+    return <form className={styled.container} onSubmit={handleOnSubmit}>
+        <input className={styled.input} type="text" placeholder="Search ..." value={input} onChange={handleOnChange} />
+        <button type='submit'>
+            <HiSearch />
+        </button>
     </form>
 }
