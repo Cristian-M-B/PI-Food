@@ -16,11 +16,11 @@ export default function Recipe({ id, name, image, score, diets, dishTypes }) {
                 {diets.map((diet, index) => <p key={index} className='recipeP'>{diet}</p>)}
             </div>
         } 
-        {Array.isArray(dishTypes) && dishTypes[0] &&
+        {/* {Array.isArray(dishTypes) && dishTypes[0] &&
             <div>
                 <h4 className='recipeH4'>Dish Types</h4>
                 {dishTypes.map((dish, index)=> <p key={index} className='recipeP'>{dish}</p>)}
             </div>
-        }
+        } */}
     </div>
 }
