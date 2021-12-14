@@ -1,31 +1,48 @@
 .detailContainer{
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .detailImage{
-    position: absolute;
-    background-color: black;
-    left: 33%;
-    width: 400px;
-    height: auto;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    width: 30%;
+    min-height: 100vh;
+    background-color: var(--primary-color);
 }
 
 .detailImage img{
-    width: 350px;
-    height: 250px;
+    width: 90%;
+    height: auto;
 }
 
-.detailH4, .detailH2, .detailP{
-    color: white;
+@media (max-width: 600px){
+    .detailImage{
+        width: 80%;
+    }
+}
+
+.detailH2{
+    color: var(--secondary-color);
+}
+
+.detailH4, .detailP{
+    color: var(--light-color);
 }
 
 .detailP, .detailH4{
     margin:15px;
 }
 
+.detailP{
+    word-wrap: break-word; 
+}
+
 .detailLoading{
-    background-color: black;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--light-color);
     text-align: center;
     align-items: baseline;
     display: inline-block;
