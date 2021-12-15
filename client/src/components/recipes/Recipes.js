@@ -17,5 +17,5 @@ export default function Recipes ({currentRecipes}) {
         : <span className='spinner'></span>
         }
     </div>
-    : <h1 className='recipesNoMatches'>{'NO MATCHES'}</h1>
+    : <h2 className='recipesNoMatches'>The recipe searched not exist!</h2>
 }

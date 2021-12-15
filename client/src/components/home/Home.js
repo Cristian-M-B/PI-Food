@@ -53,27 +53,26 @@ export default function Home () {
         {/* <div>
             <button className={styled.btn} onClick={handleOnClick}>Reload Recipes</button>
         </div> */}
-        {Array.isArray(currentRecipes) && 
-        <div className={styled.filters}>
-        <select className={styled.select} defaultValue='Sort by name' onChange={handleSortAlphabetically}>
-            <option disabled>Sort by name</option>
-            <option value='asc'>A-Z</option>
-            <option value='desc'>Z-A</option>
-        </select>
-        <select className={styled.select} defaultValue='Sort by score' onChange={handleSortScore}>
-            <option disabled>Sort by score</option>
-            <option value='lower'>Lower</option>
-            <option value='higher'>Higher</option>
-        </select>
-        <select className={styled.select} defaultValue='Filter by type' onChange={handleFilter}>
-            <option disabled>Filter by type</option>
-            {allTypes?.map((type, index) => <option key={index} value={type}>{type}</option>)}
-        </select>
-        {/* <Paged recipesPerPage={recipesPerPage} allRecipes={allRecipes.length} paged={paged} currentPage={currentPage} /> */}
-        </div>
+        {Array.isArray(currentRecipes) && currentRecipes.length >0 &&
+            <div className={styled.filters}>
+                <select className={styled.select} defaultValue='Sort by name' onChange={handleSortAlphabetically}>
+                    <option disabled>Sort by name</option>
+                    <option value='asc'>A-Z</option>
+                    <option value='desc'>Z-A</option>
+                </select>
+                <select className={styled.select} defaultValue='Sort by score' onChange={handleSortScore}>
+                    <option disabled>Sort by score</option>
+                    <option value='lower'>Lower</option>
+                    <option value='higher'>Higher</option>
+                </select>
+                <select className={styled.select} defaultValue='Filter by type' onChange={handleFilter}>
+                    <option disabled>Filter by type</option>
+                    {allTypes?.map((type, index) => <option key={index} value={type}>{type}</option>)}
+                </select>
+            </div>
         }
         <Recipes currentRecipes={currentRecipes}/>
-        {Array.isArray(currentRecipes) && 
+        {Array.isArray(currentRecipes) && currentRecipes.length >0 &&
         <Paged recipesPerPage={recipesPerPage} allRecipes={allRecipes.length} paged={paged} currentPage={currentPage} />
         }
     </div>
