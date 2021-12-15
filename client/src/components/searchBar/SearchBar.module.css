@@ -5,15 +5,9 @@
     width: 70vh;
     min-width: 15vh;
     height: 35px;
-    border-radius: 3px;;
+    border-radius: 3px;
     color: var(--primary-color);
     background-color: rgba(235, 235, 235, 0.856); 
-    /* margin: 0px 20px; */
-}
-
-.container:hover {
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
 }
 
 .input {
@@ -40,4 +34,5 @@
 .container button:hover {
     background-color: var(--secondary-color);
     color: var(--primary-color);
+    cursor: pointer;
 }

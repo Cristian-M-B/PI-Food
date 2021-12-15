@@ -1,26 +1,23 @@
 .btn {
     background-color: var(--primary-color);
-    color: var(--light-color);
-    border: 1px solid var(--light-color);
+    color: var(--secondary-color);
+    border: 2px solid var(--secondary-color);
     border-radius: 5px;
     margin: 5px;
     padding: 5px;
+    cursor: pointer;
 } 
 
 .btn:hover {
-    background-color: var(--light-color);
-    color: var(--primary-color);
-    border: 1px solid var(--primary-color);
+    background-color: var(--primary-color);
+    color: var(--light-color);
+    border: 2px solid var(--light-color);
 } 
-
-.btn:active{
-    font-size: 20px;
-}
 
 .currentPaged {
     background-color: var(--secondary-color);
-    color: var(--light-color);
-    border: 1px solid var(--light-color);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
     border-radius: 5px;
     margin: 5px;
     padding: 5px;

@@ -74,6 +74,10 @@ input, textarea {
     outline: none;
 }
 
+.input, input.errors {
+    width: 70%;
+}
+
 .formP {
     color: var(--light-color);
     text-decoration: underline;
