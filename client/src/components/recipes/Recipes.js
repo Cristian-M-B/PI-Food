@@ -14,8 +14,8 @@ export default function Recipes ({currentRecipes}) {
         score={recipe.score}
         diets={recipe.diets}
         dishTypes={recipe.dishTypes} />)
-        : <span className='spinner'></span>
+        : <div className='containerSpinner'><span className='spinner'></span></div>
         }
     </div>
-    : <h2 className='recipesNoMatches'>The recipe searched not exist!</h2>
+    : <div className='containerMessage'><h2 className='recipesNoMatches'>The recipe searched not exist!</h2></div>
 }
