@@ -17,10 +17,10 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
     },
     score: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.STRING,
     },
     healthScore: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.STRING,
     },
     summary: {
       type: DataTypes.TEXT,
