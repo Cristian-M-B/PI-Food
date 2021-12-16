@@ -10,6 +10,14 @@
     margin-top: 40vh;
 }
 
+.containerSpinner{
+    height: 82.5vh;
+}
+
+.containerMessage{
+    height: 44vh;
+}
+
 .spinner, .spinner:after{
     width: 64px;
     height: 64px;

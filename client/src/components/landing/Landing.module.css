@@ -1,30 +1,42 @@
 .landingContainer{
-    /* position: relative; */
+    position: relative;
     background-color: rgb(31, 29, 29);
-    background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFzua7VtnW-B8cP1ZLp8ELCpTvRRYe1c4JBQ&usqp=CAU);
+    background-image: url(https://image.freepik.com/foto-gratis/retrato-chef-sonriente-uniforme_329181-675.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: 50% bottom;
+    background-position: center;
     height: 100vh; 
-    width: 100vw; 
-}  
-
-.landingContainer img{
-    width: 100%;
-    height: 650px;
-}
-
-.landingH3{
-    position: absolute;
-    top: 35%;
-    left: 41%;
-    background-color: var(--primary-color);
-    color: var(--light-color);
+    width: 100vw 
 }
 
 .landingButton{
     position: absolute;
-    top: 39%;
-    left: 41%;
-    font-size: 16px;
+    top: 63%;
+    left: 56%;
+    width: 20vh;
+    height: 20vh;
+    margin-top: -10vh;
+    margin-left: -10vh;
+    background-color: #4c474975;
+    color: rgb(224, 223, 223);
+    border: none;
+    border-radius: 50%;
+    font-weight:bold;
+    font-size: larger;
+    cursor: pointer;
 } 
+
+.landingButton:hover {
+    background-color: var(--primary-color);
+}
+
+@media (max-width: 600px){
+    .landingButton{
+        top: 60%;
+        left: 65%;
+        width: 16vh;
+        height: 16vh;
+        margin-top: -8vh;
+        margin-left: -8vh;
+    }
+}
