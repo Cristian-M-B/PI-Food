@@ -6,6 +6,7 @@ import NavBar from './components/navBar/NavBar.js';
 import Home from './components/home/Home.js';
 import Detail from './components/detail/Detail.js';
 import Form from './components/form/Form.js';
+import Footer from './components/footer/Footer.js'
 import { getDbRecipes, getRecipes, getTypes } from './redux/actions/index.js';
 import './App.css';
 import axios from 'axios';
@@ -30,6 +31,7 @@ function App() {
       <Route exact path='/home/recipes' component={Home} />
       <Route exact path='/home/detail/:id' component={Detail} />
       <Route exact path='/home/create' component={Form} />
+      <Route path='/home' component={Footer} />
     </div>
   );
 }
