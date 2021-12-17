@@ -50,6 +50,10 @@
     margin-top: 175px;
 }
 
+.containerSpinner{
+    height: 82.5vh;
+}
+
 .spinner, .spinner:after{
     width: 64px;
     height: 64px;

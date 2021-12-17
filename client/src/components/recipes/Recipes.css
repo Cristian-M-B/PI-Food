@@ -7,7 +7,7 @@
 .recipesNoMatches{
     color: var(--primary-color);
     text-align: center;
-    margin-top: 40vh;
+    margin-top: 30vh;
 }
 
 .containerSpinner{
@@ -15,7 +15,7 @@
 }
 
 .containerMessage{
-    height: 44vh;
+    height: 45vh;
 }
 
 .spinner, .spinner:after{
