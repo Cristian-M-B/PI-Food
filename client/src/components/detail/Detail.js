@@ -56,7 +56,7 @@ export default function Detail () {
                     </div>
                 }
             </div>
-            : <span className={styled.spinner}></span>
+            : <div className='containerSpinner'><span className={styled.spinner}></span></div>
         }   
     </div>
 }

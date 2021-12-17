@@ -18,18 +18,14 @@ export default function Home () {
     const indexFirstRecipe = indexLastRecipe - recipesPerPage;
     const currentRecipes = allRecipes.slice(indexFirstRecipe, indexLastRecipe);
 
-    useEffect(() => {
-        dispatch(getDbRecipes())
-    }, [dispatch])
-
     function paged (numberPage){
         setCurrentPage(numberPage);
     }
 
-    // function handleOnClick(e){
-    //     dispatch(getDbRecipes());
-    //     setCurrentPage(1);
-    // }
+    function handleOnClick(e){
+        dispatch(getDbRecipes());
+        setCurrentPage(1);
+    }
     
     function handleSortAlphabetically(e){
         dispatch(sortRecipesByName(e.target.value));
@@ -50,10 +46,7 @@ export default function Home () {
     }
 
     return <div>
-        {/* <div>
-            <button className={styled.btn} onClick={handleOnClick}>Reload Recipes</button>
-        </div> */}
-        {Array.isArray(currentRecipes) && currentRecipes.length >0 &&
+        {Array.isArray(currentRecipes) && currentRecipes.length > 0 &&
             <div className={styled.filters}>
                 <select className={styled.select} defaultValue='Sort by name' onChange={handleSortAlphabetically}>
                     <option disabled>Sort by name</option>
@@ -71,9 +64,12 @@ export default function Home () {
                 </select>
             </div>
         }
-        <Recipes currentRecipes={currentRecipes}/>
-        {Array.isArray(currentRecipes) && currentRecipes.length >0 &&
-        <Paged recipesPerPage={recipesPerPage} allRecipes={allRecipes.length} paged={paged} currentPage={currentPage} />
+        {!Array.isArray(allRecipes) &&
+            <button className={styled.select} onClick={handleOnClick}>Reload recipes</button>
+        }
+        <Recipes currentRecipes={currentRecipes} />
+        {Array.isArray(currentRecipes) && currentRecipes.length > 0 &&
+            <Paged recipesPerPage={recipesPerPage} allRecipes={allRecipes.length} paged={paged} currentPage={currentPage} />
         }
     </div>
 }
