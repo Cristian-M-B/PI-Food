@@ -1,22 +1,19 @@
 .landingContainer{
-    position: relative;
     background-color: rgb(31, 29, 29);
-    background-image: url(https://image.freepik.com/foto-gratis/retrato-chef-sonriente-uniforme_329181-675.jpg);
+    background-image: url(https://www.twomanychefs.com/wp-content/uploads/2021/03/consultoria-cocina-a-ciegas.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position: 65% 95%;
     height: 100vh; 
-    width: 100vw 
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .landingButton{
-    position: absolute;
-    top: 63%;
-    left: 56%;
     width: 20vh;
     height: 20vh;
-    margin-top: -10vh;
-    margin-left: -10vh;
     background-color: #4c474975;
     color: rgb(224, 223, 223);
     border: none;
@@ -32,11 +29,7 @@
 
 @media (max-width: 600px){
     .landingButton{
-        top: 60%;
-        left: 65%;
         width: 16vh;
         height: 16vh;
-        margin-top: -8vh;
-        margin-left: -8vh;
     }
 }
