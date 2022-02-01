@@ -9,12 +9,17 @@
 .container p{
     color: var(--secondary-color);
     font-weight: bold;
+    margin-right: 1vw;
 }
 
 .container a{
     color: var(--secondary-color);
     width: 50px;
+    margin-right: 1vw;
 }
 
+.container a:hover{
+    border-bottom: 1px solid var(--secondary-color);
+}
 
 
