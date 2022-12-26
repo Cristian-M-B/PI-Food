@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import {Route} from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Landing from './components/landing/Landing.js';
 import NavBar from './components/navBar/NavBar.js';
@@ -10,8 +10,6 @@ import Footer from './components/footer/Footer.js'
 import { getDbRecipes, getRecipes, getTypes } from './redux/actions/index.js';
 import './App.css';
 import axios from 'axios';
-import dotenv from 'dotenv';
-dotenv.config();
 
 axios.defaults.baseURL = 'https://pi-food-production-680e.up.railway.app';
 // axios.defaults.baseURL = 'http://localhost:3001';
