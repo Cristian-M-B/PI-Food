@@ -10,6 +10,7 @@ export default function Home () {
     const allRecipes = useSelector(state => state.recipes)
     const allTypes = useSelector(state => state.types)
 
+    // eslint-disable-next-line
     const [render, setRender] = useState('');
 
     const [currentPage, setCurrentPage] = useState(1);
