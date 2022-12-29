@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getDbRecipes, sortRecipesByName, sortRecipesByScore, filterRecipesByType } from '../../redux/actions/index.js';
 import Recipes from '../recipes/Recipes.js';

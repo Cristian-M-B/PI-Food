@@ -187,13 +187,13 @@ export default function Form () {
                 <label htmlFor='dish'>Dish Types</label>
                 <input className={errorsDish? styled.errors : styled.input} type='text' id='dish' name='dish'
                     value={dish} onChange={handleDish} />
-                {dish && !errorsDish && <a className ={styled.formA} onClick={handleAddDish}> Add dish</a>}
+                {dish && !errorsDish && <button className={styled.formA} onClick={handleAddDish}> Add dish</button>}
                 {errorsDish && <p className={styled.errors}>{errorsDish}</p>}
 
                 <label htmlFor='step'>Steps</label>
                 <input className={errorsStep? styled.errors : styled.input} type='text' id='step' name='step'
                     value={step} onChange={handleStep} />
-                {step && !errorsStep && <a className ={styled.formA} onClick={handleAddStep}> Add step</a>}
+                {step && !errorsStep && <button className={styled.formA} onClick={handleAddStep}> Add step</button>}
                 {errorsStep && <p className={styled.errors}>{errorsStep}</p>}
 
                 <p className={styled.formP}>Diets Types</p>
