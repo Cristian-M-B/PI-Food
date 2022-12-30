@@ -11,8 +11,7 @@ import { getDbRecipes, getRecipes, getTypes } from './redux/actions/index.js';
 import './App.css';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://pi-food-production-680e.up.railway.app';
-// axios.defaults.baseURL = 'http://localhost:3001';
+axios.defaults.baseURL =  process.env.REACT_APP_API;
 
 function App() {
 
