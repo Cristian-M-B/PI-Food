@@ -11,7 +11,7 @@ import { getDbRecipes, getRecipes, getTypes } from './redux/actions/index.js';
 import './App.css';
 import axios from 'axios';
 
-axios.defaults.baseURL =  process.env.REACT_APP_API;
+axios.defaults.baseURL =  process.env.REACT_APP_API || 'http://localhost:3001';
 
 function App() {
 
