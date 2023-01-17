@@ -11,7 +11,7 @@ export default function Recipes ({currentRecipes}) {
         id={recipe.id}
         name={recipe.name}
         image={recipe.image}
-        score={recipe.score}
+        healthScore={recipe.healthScore}
         diets={recipe.diets}
         dishTypes={recipe.dishTypes} />)
         : <div className='containerSpinner'><span className='spinner'></span></div>

@@ -13,7 +13,6 @@ export default function Form () {
     const [dish, setDish] = useState("");
     const [input, setInput] = useState({
         name: "",
-        score: "",
         healthScore: "",
         image: "",
         summary: "",
@@ -31,14 +30,6 @@ export default function Form () {
             errors.name = 'Name is invalid';
         } else if(input.name.length < 3) {
             errors.name = 'Minimum 3 letters'
-        }
-
-        if(input.score){
-            if(!/^[0-9]+$/.test(input.score)){
-                errors.score = 'Score is invalid'
-            } else if(input.score < 0 || input.score > 100){
-                errors.score = 'Maximum up to 100'
-            }
         }
 
         if(input.healthScore){
@@ -62,7 +53,6 @@ export default function Form () {
         } else if(input.summary.length < 20){
             errors.summary = 'Minimum 20 letters';
         }
-
         return errors;
     }
 
@@ -149,7 +139,6 @@ export default function Form () {
         dispatch(getDbRecipes());
         setInput({
             name: "",
-            score: "",
             healthScore: "",
             image: "",
             summary: "",
@@ -168,11 +157,6 @@ export default function Form () {
                 <input className={errors.name? styled.errors : styled.input} type='text' id='name' name='name'
                     value={input.name} onChange={handleOnChange} />
                 {errors.name && <p className={styled.errors}>{errors.name}</p>}
-
-                <label htmlFor='score'>Score</label>
-                <input className={errors.score? styled.errors : styled.input} type='text' id='score' name='score'
-                    value={input.score} onChange={handleOnChange} />
-                {errors.score && <p className={styled.errors}>{errors.score}</p>}
 
                 <label htmlFor='healthScore'>Health Score</label>
                 <input className={errors.healthScore? styled.errors : styled.input} type='text' id='healthScore' name='healthScore'

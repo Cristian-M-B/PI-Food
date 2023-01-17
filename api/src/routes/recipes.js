@@ -10,9 +10,7 @@ router.get('/', async (req, res) => {
 
     if(filter){
         try {
-            let dbRecipesPromise = await Recipe.findAll({
-            include: Type
-            });
+            let dbRecipesPromise = await Recipe.findAll({include: Type});
             let dbRecipes=[];
             dbRecipesPromise.forEach(recipe => {
                 recipe.Types.forEach(diet => {
@@ -20,14 +18,14 @@ router.get('/', async (req, res) => {
                         id: recipe.id,
                         name: recipe.name,
                         image: recipe.image,
-                        score: recipe.score,
+                        healthScore: recipe.healthScore,
                         diets: recipe.Types.map(diet => diet.name),
                         dishTypes: recipe.dishTypes
                     })
                 })
             })
 
-            let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=90`)
+            let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=60`)
             let apiRecipes = [];
             apiRecipesPromise.data.results.forEach(recipe => {
                 recipe.vegetarian && recipe.diets.unshift('vegetarian');
@@ -36,7 +34,7 @@ router.get('/', async (req, res) => {
                         id: recipe.id,
                         name: recipe.title,
                         image: recipe.image,
-                        score: recipe.spoonacularScore,
+                        healthScore: recipe.healthScore,
                         diets: recipe.diets.map(diet => diet),
                         dishTypes: recipe.dishTypes.map(dish => dish),
                     })
@@ -62,7 +60,7 @@ router.get('/', async (req, res) => {
                     id: recipe.id,
                     name: recipe.name,
                     image: recipe.image,
-                    score: recipe.score,
+                    healthScore: recipe.healthScore,
                     diets: recipe.Types.map(diet => diet.name),
                     dishTypes: recipe.dishTypes
                 }
@@ -74,7 +72,7 @@ router.get('/', async (req, res) => {
                     id: recipe.id,
                     name: recipe.title,
                     image: recipe.image,
-                    score: recipe.spoonacularScore,
+                    healthScore: recipe.healthScore,
                     diets: recipe.diets.map(diet => diet),
                     dishTypes: recipe.dishTypes.map(dish => dish),
                 }
@@ -92,13 +90,13 @@ router.get('/', async (req, res) => {
 
     if (api) {
         try {
-            let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=90`)
+            let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=60`)
             let apiRecipes = apiRecipesPromise.data.results.map(recipe => {
                 apiRecipesAll = {
                     id: recipe.id,
                     name: recipe.title,
                     image: recipe.image,
-                    score: recipe.spoonacularScore,
+                    healthScore: recipe.healthScore,
                     diets: recipe.diets.map(diet => diet),
                     dishTypes: recipe.dishTypes.map(dish => dish),
                 }
@@ -113,15 +111,13 @@ router.get('/', async (req, res) => {
 
     if(db){
         try {
-            let dbRecipesPromise = await Recipe.findAll({
-                include: Type
-            });
+            let dbRecipesPromise = await Recipe.findAll({include: Type});
             let dbRecipes = dbRecipesPromise.map(recipe => {
                 return {
                     id: recipe.id,
                     name: recipe.name,
                     image: recipe.image,
-                    score: recipe.score,
+                    healthScore: recipe.healthScore,
                     diets: recipe.Types.map(diet => diet.name),
                     dishTypes: recipe.dishTypes
                 }
@@ -133,26 +129,24 @@ router.get('/', async (req, res) => {
     }
 
     // try {
-    //     let dbRecipesPromise = await Recipe.findAll({
-    //         include: Type
-    //     });
+    //     let dbRecipesPromise = await Recipe.findAll({include: Type});
     //     let dbRecipes = dbRecipesPromise.map(recipe => {
     //         return {
     //             id: recipe.id,
     //             name: recipe.name,
     //             image: recipe.image,
-    //             score: recipe.score,
+    //             healthScore: recipe.healthScore,
     //             diets: recipe.Types.map(diet => diet.name),
     //             dishTypes: recipe.dishTypes
     //         }
     //     })
-    //     let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=90`)
+    //     let apiRecipesPromise = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=${API_KEY}&addRecipeInformation=true&number=60`)
     //     let apiRecipes = apiRecipesPromise.data.results.map(recipe => {
     //         apiRecipesAll = {
     //             id: recipe.id,
     //             name: recipe.title,
     //             image: recipe.image,
-    //             score: recipe.spoonacularScore,
+    //             healthScore: recipe.healthScore,
     //             diets: recipe.diets.map(diet => diet),
     //             dishTypes: recipe.dishTypes.map(dish => dish),
     //         }
@@ -179,7 +173,6 @@ router.get('/:id', async (req, res) => {
                         id: dbRecipesPromise.id,
                         name: dbRecipesPromise.name,
                         image: dbRecipesPromise.image,
-                        score: dbRecipesPromise.score,
                         healthScore: dbRecipesPromise.healthScore,
                         summary: dbRecipesPromise.summary,
                         steps: dbRecipesPromise.steps,
@@ -194,7 +187,6 @@ router.get('/:id', async (req, res) => {
                         id: apiRecipes.id,
                         name: apiRecipes.title,
                         image: apiRecipes.image,
-                        score: apiRecipes.spoonacularScore,
                         healthScore: apiRecipes.healthScore,
                         summary: apiRecipes.summary,
                         diets: apiRecipes.diets.map(diet => diet),
@@ -213,12 +205,11 @@ router.get('/:id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    let {name, image, score, healthScore, summary, steps, dishTypes, diets} = req.body;
+    let {name, image, healthScore, summary, steps, dishTypes, diets} = req.body;
         try {
             let createRecipe = await Recipe.create({
                 name,
                 image,
-                score,
                 healthScore,
                 dishTypes,
                 summary,

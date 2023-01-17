@@ -25,11 +25,7 @@ export default function Detail () {
                 {detail.image ? <img src={detail.image} alt="Not Found" />
                     : <img src="https://international-experience.es/wp-content/uploads/2019/08/comidas-mundo.jpg" alt="Not Found" />
                 }
-                <div className={styled.detailScore}>
-                    <h4 className={styled.detailH4}>Score</h4>
-                    <p className={styled.detailP}>{detail.score? detail.score : 0}</p>
-                </div>
-                <div className={styled.detailHealthScore}>
+                <div>
                     <h4 className={styled.detailH4}>Health Score</h4>
                     <p className={styled.detailP}>{detail.healthScore? detail.healthScore : 0}</p>
                 </div>
