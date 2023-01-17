@@ -71,10 +71,10 @@ function reducer(state = initialState, action) {
         case SORT_RECIPES_BY_SCORE:
             let sortScore = action.payload === 'lower'?
                 state.recipes.sort((a, b) => {
-                    return a.score - b.score
+                    return a.healthScore - b.healthScore
                 })
                 : state.recipes.sort((a, b) => {
-                    return b.score - a.score
+                    return b.healthScore - a.healthScore
                 })
             return {
             ...state,
