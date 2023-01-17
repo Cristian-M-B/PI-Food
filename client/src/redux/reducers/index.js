@@ -12,40 +12,42 @@ import { GET_DB_RECIPES } from '../actions/constants';
 var initialState = {
     recipes: [],
     apiRecipes: [],
+    dbRecipes: [],
     types: [],
     detail: {}
 }
 
 function reducer(state = initialState, action) {
-    switch(action.type) {
+    switch (action.type) {
         case GET_RECIPES:
+            let r = state.dbRecipes.length ? state.dbRecipes.concat(action.payload) : action.payload;
             return {
-            ...state,
-            recipes: action.payload,
-            apiRecipes: action.payload
-        }
+                ...state,
+                recipes: r,
+                apiRecipes: action.payload
+            }
         case GET_TYPES:
             return {
-            ...state,
-            types: action.payload
-        }
+                ...state,
+                types: action.payload
+            }
         case GET_DETAIL:
             return {
-            ...state,
-            detail: action.payload
-        }
+                ...state,
+                detail: action.payload
+            }
         case REMOVE_DETAIL:
             return {
-            ...state,
-            detail: {}
-        }
+                ...state,
+                detail: {}
+            }
         case GET_RECIPES_NAME:
             return {
-            ...state,
-            recipes: action.payload
-        }
+                ...state,
+                recipes: action.payload
+            }
         case SORT_RECIPES_BY_NAME:
-            let sortName = action.payload ==='asc'? 
+            let sortName = action.payload === 'asc' ?
                 state.recipes.sort((a, b) => {
                     if (a.name.toLowerCase() > b.name.toLowerCase()) {
                         return 1
@@ -65,11 +67,11 @@ function reducer(state = initialState, action) {
                     return 0
                 })
             return {
-            ...state,
-            recipes: sortName
-        }
+                ...state,
+                recipes: sortName
+            }
         case SORT_RECIPES_BY_SCORE:
-            let sortScore = action.payload === 'lower'?
+            let sortScore = action.payload === 'lower' ?
                 state.recipes.sort((a, b) => {
                     return a.healthScore - b.healthScore
                 })
@@ -77,23 +79,24 @@ function reducer(state = initialState, action) {
                     return b.healthScore - a.healthScore
                 })
             return {
-            ...state,
-            recipes: sortScore
-        }
+                ...state,
+                recipes: sortScore
+            }
         case FILTER_RECIPES_BY_TYPE:
             return {
                 ...state,
                 recipes: action.payload
             }
-        case POST_RECIPE: 
-        return{
-            ...state,
-        }
-        case GET_DB_RECIPES: 
-        return {
-            ...state,
-            recipes: [ ...action.payload, ...state.apiRecipes]
-        }
+        case POST_RECIPE:
+            return {
+                ...state,
+            }
+        case GET_DB_RECIPES:
+            return {
+                ...state,
+                dbRecipes: action.payload,
+                recipes: [...action.payload, ...state.apiRecipes]
+            }
         default: return state
     }
 }
