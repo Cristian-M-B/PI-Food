@@ -8,10 +8,10 @@ const {
 
 let sequelize =
   process.env.NODE_ENV === "production" ? 
-    new Sequelize(DATABASE_URL, {
+    new Sequelize(`${DATABASE_URL}`, {
     dialectOptions: {
       ssl: {
-        require: true,
+        // require: true,
         rejectUnauthorized: false
       }
     }
